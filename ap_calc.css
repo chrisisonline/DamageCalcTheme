@@ -1,3 +1,7 @@
+* {
+    font-family: 'Work Sans', sans-serif;
+}
+
 /* header */
 a img {
     border: 0;
@@ -272,39 +276,47 @@ th {
     float: right;
 }
 
-/* header */
+/* header - Customized*/
 .move-result-group {
-    max-width: 80em;
     min-width: 50em;
-    margin: 1em 0 11.5em;
+    margin: 1em 0 8em;
 }
 .move-result-subgroup {
     float: left;
-    width: 50%;
+    width: 45%;
+}
+.move-result-group .vs-logo {
+    background: url('VS-Logo.png') no-repeat center;
+    background-size: contain;
+    width: 10%;
+    min-height: 80px;
 }
 .move-result-group .btn {
     border: initial;
-    border-radius: 0px;
+    border-radius: 0;
     float: left;
-    margin: 0;
-    width: 80%;
-
-}
-/*Bookmark--*/
-.move-result-group span {
+    padding: .8em 0;
+    margin: 0 0 .4em;
+    width: 100%;
 
 }
 .main-result-group {
     margin: 2em 0 1em;
+    text-align: center;
+    font-size: 1.2em;
 }
 .move-result-subgroup div {
     float : left;
     width: 23%;
-    margin: 20px 1%;
+    margin:  0 1%;
+}
+.move-result-subgroup span {
+    display: block;
+    text-align: center;
+    font-weight: bold;
 }
 .move-result-group .result-move-header {
-    font-size: 0.8em;
-    font-weight: bold;
+    font-size: .8em;
     margin: 0 0 5px;
     width: 100%;
 }
