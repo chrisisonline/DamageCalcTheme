@@ -631,6 +631,12 @@ $(document).ready(function() {
         };
     });
 
+    /*Add .infogroup to all div wrappers inside panel*/
+    $(".panel div[class^='move'").each(function(){
+        $(this).addClass('info-group');
+        $(this).addClass('move-section');
+    });
+
     /*END OF CUSTOMIZED*/
 
     $("#gen6").prop("checked", true);
