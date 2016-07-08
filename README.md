@@ -22,7 +22,7 @@ Feel free to give me suggestions on what you think should be changed :D
 
 Current changes written by me! Chris Jiang 2016
 
-##ALL CREDITS GO TO THE ORIGINAL CREATORS FOR BASE FUNCTIONALITY, DATA, AND SOURCE CODE! CHECK OUT THEIR PAGE BELOW.
+#####ALL CREDITS GO TO THE ORIGINAL CREATORS FOR BASE FUNCTIONALITY, DATA, AND SOURCE CODE! CHECK OUT THEIR PAGE BELOW.
 
 
 Damage Calculator for Pokemon cartridge battles, Gen 1-6.
