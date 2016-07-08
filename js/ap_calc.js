@@ -612,6 +612,27 @@ function getSelectOptions(arr, sort) {
 }
 
 $(document).ready(function() {
+    /*CUSTOMIZED*/
+
+    /*Removes large btn classes*/
+    $('label').each(function(){
+        $(this).removeClass('btn-xxxwide');
+    });
+
+    /*Moves the pkm stat infront of form*/
+    $( "tr" ).each(function(){
+        $(this).find('td:nth-last-child(2)').remove();
+        $(this).find('th:first-child').after( '<th></th>' );
+        $(this).find('td:first-child').after( '<td><span class="total"></span></td>' );
+
+        if ($(this).attr("class")!='hp') {
+            $(this).find('td:last-child').before( '<a class="btn">-</a>' );
+            $(this).find('td:last-child').after( '<a class="btn">+</a>' );       
+        };
+    });
+
+    /*END OF CUSTOMIZED*/
+
     $("#gen6").prop("checked", true);
     $("#gen6").change();
     $("#percentage").prop("checked", true);
@@ -647,8 +668,4 @@ $(document).ready(function() {
     });
     $(".set-selector").val(getSetOptions()[gen < 4 ? 3 : 1].id);
     $(".set-selector").change();
-
-    $('label').each(function(){
-        $(this).removeClass('btn-xxxwide');
-    });
 });
