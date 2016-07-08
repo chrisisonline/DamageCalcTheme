@@ -637,6 +637,61 @@ $(document).ready(function() {
         $(this).addClass('move-section');
     });
 
+    $('.info-group tr .btn').on('click', function(){
+
+        if ($(this).is(':last-child')){
+            var currentValue = parseInt($(this).prev().find('.boost option[selected="selected"]').attr('value'));
+
+            if ( currentValue<=5 && currentValue>=-6) {
+                $(this).prev().find('.boost option').each(function(){
+                    $(this).removeAttr('selected');
+                });
+                $(this).prev().find('.boost option[value="'+(currentValue+1)+'"]').attr('selected','selected');
+                setTimeout(calculate, 0);
+            }
+        } else if ($(this).is(':nth-last-child(3)')) {
+
+            var currentValue = parseInt($(this).next().find('.boost option[selected="selected"]').attr('value'));
+
+            if ( currentValue<=6 && currentValue>=-5) {
+                $(this).next().find('.boost option').each(function(){
+                    $(this).removeAttr('selected');
+                });
+                $(this).next().find('.boost option[value="'+(currentValue-1)+'"]').attr('selected','selected');
+                setTimeout(calculate, 0);
+            }
+        }
+
+    });
+
+    /*
+    function txt(element) {
+        return $.trim(element.text());
+    }
+
+    $(".skill > select").each(function () {
+        var select = $(this);
+        var label = $("label[for='" + select.attr('id') + "']");
+
+        function selectedOption() {
+            return select.children('option:selected');
+        }
+        select.hide();
+
+        label.addClass("button");
+        label.prop('title', txt(selectedOption()));
+
+        label.click(function () {
+            var next = selectedOption().next();
+            if (next.length === 0) {
+                next = select.children('option:first');
+            }
+            next.prop('selected', 'true');
+            label.prop('title', txt(next));
+        });
+    });
+    */
+
     /*END OF CUSTOMIZED*/
 
     $("#gen6").prop("checked", true);
