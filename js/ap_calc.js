@@ -626,8 +626,8 @@ $(document).ready(function() {
         $(this).find('td:first-child').after( '<td><span class="total"></span></td>' );
 
         if ($(this).attr("class")!='hp') {
-            $(this).find('td:last-child').before( '<a class="btn">-</a>' );
-            $(this).find('td:last-child').after( '<a class="btn">+</a>' );       
+            $(this).find('td:last-child').before( '<a class="btn btn-boost">-</a>' );
+            $(this).find('td:last-child').after( '<a class="btn btn-boost">+</a>' );       
         };
     });
 
@@ -637,60 +637,25 @@ $(document).ready(function() {
         $(this).addClass('move-section');
     });
 
-    $('.info-group tr .btn').on('click', function(){
+    $('.info-group .btn-boost').on('click', function(){
 
         if ($(this).is(':last-child')){
-            var currentValue = parseInt($(this).prev().find('.boost option[selected="selected"]').attr('value'));
+            var currentValue = parseInt($(this).prev().find('.boost').val());
 
             if ( currentValue<=5 && currentValue>=-6) {
-                $(this).prev().find('.boost option').each(function(){
-                    $(this).removeAttr('selected');
-                });
-                $(this).prev().find('.boost option[value="'+(currentValue+1)+'"]').attr('selected','selected');
-                setTimeout(calculate, 0);
+                $(this).prev().find('.boost').val(currentValue+1);
+                calculate();
             }
         } else if ($(this).is(':nth-last-child(3)')) {
-
-            var currentValue = parseInt($(this).next().find('.boost option[selected="selected"]').attr('value'));
+            var currentValue = parseInt($(this).next().find('.boost').val());
 
             if ( currentValue<=6 && currentValue>=-5) {
-                $(this).next().find('.boost option').each(function(){
-                    $(this).removeAttr('selected');
-                });
-                $(this).next().find('.boost option[value="'+(currentValue-1)+'"]').attr('selected','selected');
-                setTimeout(calculate, 0);
+                $(this).next().find('.boost').val(currentValue-1);
+                calculate();
             }
         }
 
     });
-
-    /*
-    function txt(element) {
-        return $.trim(element.text());
-    }
-
-    $(".skill > select").each(function () {
-        var select = $(this);
-        var label = $("label[for='" + select.attr('id') + "']");
-
-        function selectedOption() {
-            return select.children('option:selected');
-        }
-        select.hide();
-
-        label.addClass("button");
-        label.prop('title', txt(selectedOption()));
-
-        label.click(function () {
-            var next = selectedOption().next();
-            if (next.length === 0) {
-                next = select.children('option:first');
-            }
-            next.prop('selected', 'true');
-            label.prop('title', txt(next));
-        });
-    });
-    */
 
     /*END OF CUSTOMIZED*/
 
