@@ -1,6 +1,68 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*
+    Color Codes:
+    Dark Blue: #003056;
+    Mid Blue: #04518C;
+    Light Blue: #00A1D9;
+    Teal: #47D9BF;
+    Dark-Teal: #62AD9B;
+    Light Tan: #FFFCE4;
+    Tan: #E0A443;
+    Dark Tan: #614101;
+*/
+
 * {
-    font-family: 'Work Sans', sans-serif;
+    font-family: 'Josefin Sans', sans-serif;
     box-sizing: border-box;
+    letter-spacing: 1px;
 }
 
 /* header */
@@ -134,8 +196,7 @@ a img {
 /* general page styling */
 html, body {
     font: 10pt Verdana, sans-serif;
-    background-color: rgb(250,250,250);
-    color: rgb(80,80,80);
+    color: #614101;
     margin: 0;
     padding: 0;
 }
@@ -150,16 +211,26 @@ div.wrapper > div > span {
 }
 fieldset {
     float: left;
-    background-color: rgb(225,225,225);
-    border: 1px solid #AAAAAA;
-    /*color: rgb(220,220,220);*/
+    border: none;
+}
+fieldset input,select {
+    color: #614101;
+    border: none;
+    border-bottom: 2px solid #00A1D9;
+    text-align: center;
+}
+hr {
+    border: 1px solid #E0A443;
 }
 legend {
     font-weight: bold;
     text-align: center;
-}
+    font-size: 1.3em;
+/*    text-shadow: 2px 2px 2px rgba(80,80,80,.5);
+*/}
 th, td {
     padding: 0;
+    float: left;
 }
 th {
     font-size: 0.8em;
@@ -182,7 +253,12 @@ th {
 .panel {
     float: left;
     display: block;
-    width: 33%;
+    width: 18%;
+    margin: 0 1%;
+}
+.poke-panel {
+    width: 40%;
+    margin: 0;
 }
 .poke-info {
     width: 100%;
@@ -192,12 +268,10 @@ th {
 }
 .field-info, .poke-import {
     text-align: center;
-    width: 80%;
-    margin-left: 10%;
+    width: 100%;
 }
 .field-info .btn {
     padding: 5px 0;
-    margin: 2px;
 }
 .holder-0 {
     position: absolute;
@@ -210,65 +284,47 @@ th {
 /* general button styling */
 .btn {
     text-align: center;
-    border: solid 1px #aaaaaa;
-    padding: 4px 8px;
+    border-bottom: 2px solid #00A1D9;
+    padding: 10px;
+    margin: 4px 1%;
     position: relative;
     cursor: pointer;
-    color: white;
-    background: rgb(80,80,80);
-    margin: -1px -3px 0;
     display: inline-block;
-    width: 5em;
+    float: left;
 
     transition: all 0.2s;
 }
-.btn-wide {
-    width: 7em;
+.btn-1 {
+    width: 98%;
 }
-.btn-xwide {
-    width: 8em;
+.btn-2 {
+    width: 48%;
 }
-.btn-xxwide {
-    width: 9em;
+.btn-3 {
+    width: 31%;
 }
-.btn-xxxwide {
-    width: 10em;
+.btn-4 {
+    width: 23%;
 }
-.btn-small {
-    width: 6em;
+.btn-5 {
+    width: 18%;
 }
-.btn-xsmall {
-    width: 1.8em;
+.btn-6 {
+    width: 16.6%;
 }
-.btn-left {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+.btn-10 {
+    width: 8%;
 }
-.btn-right {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-.btn-top {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-}
-.btn-bottom {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
-.btn-mid {
-    border-radius: 0;
+
+.btn-input:checked + .btn {
+    font-weight: bold;
+    color: white;
+    background: #00A1D9;
 }
 .btn:hover {
     z-index: 10;
-    border-color: #777777;
-    background: #e3e3e3;
-    color: rgb(80,80,80);
-}
-.btn-input:checked + .btn {
-    font-weight: bold;
-    color: rgb(80,80,80);
-    background: #f5f5f5;
+    color: white;
+    background: #00A1D9;
 }
 .btn-input[type="radio"]:checked + .btn {
     cursor: default;
@@ -289,6 +345,76 @@ th {
 .right {
     float: right;
 }
+/*move-bar damage visualization*/
+.move-bar {
+    width: 100%;
+    height: 30px;
+    margin-top: 2em;
+    position: relative;
+    background-color: rgb(100,100,100);
+}
+#move-bar1 {
+    position: relative;
+    float: left;
+    width: 40%;
+    margin-left: 5%;
+    height: inherit;
+}
+#move-bar1 .move-bar-base {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: inherit;
+    background-color: green;
+}
+#move-bar1 .move-bar-max {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: inherit;
+    background-color: yellow;
+}
+#move-bar1 .move-bar-min {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: inherit;
+    background-color: red;
+}
+#move-bar2 {
+    position: relative;
+    float: right;
+    width: 40%;
+    margin-right: 5%;
+    height: inherit;
+}
+#move-bar2 .move-bar-base {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: inherit;
+    background-color: green;
+}
+#move-bar2 .move-bar-max {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: inherit;
+    background-color: yellow;
+}
+#move-bar2 .move-bar-min {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: inherit;
+    background-color: red;
+}
 
 /* header - Customized*/
 .move-result-group {
@@ -305,12 +431,10 @@ th {
     min-height: 80px;
 }
 .move-result-group .btn {
-    border: initial;
     border-radius: 0;
     float: left;
     padding: .8em 0;
     margin: 0 0 .4em;
-    width: 100%;
 
 }
 .main-result-group {
@@ -338,21 +462,30 @@ th {
 /* pokemon info */
 
 /*CUSTOMIZED*/
+.poke-info * {
+    margin: 4px 0;
+}
+.poke-info div {
+    float: left;
+}
 .poke-info label {
     display: block;
-    min-width: 6em;
+    width: 100%;
 }
 
 .poke-info input:not([type]), .poke-info input[type="text"], .poke-info span {
     display: inline-block;
-    width:5em;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 .poke-info input[type="number"] {
     display: inline;
-    width: 5em;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 .info-group {
-    margin: .3em 0;
     text-align: center;
     width: 100%;
     float: left;
@@ -360,43 +493,29 @@ th {
 .set-selector {
     width: 100%;
 }
-.info-selectors select {
-    width: 8em;
-}
-select.toxic-counter {
-    width: 4.5em;
-}
 .move-selector, .move-bp, .move-type, .move-cat, .move-hits {
     font-size: 0.9em;
 }
-/*.move-selector {
-    width: 9.5em;
-}*/
-.poke-info input.move-bp {
-    width: 4em;
-}
 /*CUSTOMIZED*/
 
-.info-group .btn {
+.info-group table a {
     position: relative;
-    top: 6px;
-    width: 1.3em;
-    line-height: 1.3em;
+    top: 10px;
+    width: 4%;
     padding: 0;
+    float: left;
     margin: 0;
-    border-radius: 50%;
-    border: none;
+    border: 0;
+/*    border: 0;*/
     text-decoration: none;
-    background-color: rgb(90,90,90);
-    color: white;
 }
-.info-group .btn:hover {
-    background-color: rgb(200,200,200);
-    color: rgb(90,90,90);
-    transition: all .2s;
+.info-group table select {
+    width: 100%;
+    float: left;
 }
 .info-group table {
-    margin: auto;
+    width: 100%;
+    float: left;
 }
 .info-group .total {
     font-weight: bold;
@@ -404,13 +523,12 @@ select.toxic-counter {
 }
 .info-group div {
     width: 50%;
-    float: left;
 }
 .info-selectors div {
     width: 25%;
 }
+
 .info-group label {
-    margin: .5em auto;
     letter-spacing: 1.5px;
 }
 .info-group .crit-btn {
@@ -421,51 +539,38 @@ select.toxic-counter {
 }
 .info-group .move-selector {
     display: block;
-    margin: .3em 3%;
-    width:94%;
+    width:100%;
     float: left;
-}
-
-.move-cat {
-    width: 5.7em;
-}
-.move-hits {
-    width: 5em;
 }
 .poke-info .crit-btn {
-    font-size: 0.8em;
-    float: left;
     padding: 3px;
-    margin: .3em 3%;
-    width:94%;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 .poke-info .move-section {
     width: 25%;
     float: left;
 }
-.poke-info .move-section select {
+.poke-info select,input {
     display: block;
-    margin: .3em 3%;
-    width:94%;
-    float: left;
-}
-.poke-info .move-section input {
-    display: block;
-    margin: .3em 3%;
-    width:94%;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
     float: left;
 }
  .poke-info .move-section .btn-input {
     display: none;
 }
-/*label, span, legend, th{
-    color:white;
-}*/
+
 /* field info */
 .field-info .btn {
     font-size: 0.8em;
 }
-
+.field-info > div {
+    width: 100%;
+    float: left;
+}
 .hide {
     display: none;
 }
@@ -473,19 +578,22 @@ select.toxic-counter {
 /* select2 overrides */
 .select2-container .select2-choice > .select2-chosen {
     width: 100%;
-    color: black;
 }
 .small-select.select2-container .select2-choice {
     font-size: 0.9em;
     height: 22px;
     line-height: 22px;
 }
-.small-select.select2-container .select2-choice .select2-arrow b {
-    background-position: 0 -4px;
+.poke-info .select2-container .select2-choice .select2-arrow{
+    display: none;
 }
-.small-select.select2-dropdown-open .select2-choice .select2-arrow b {
-    background-position: -18px -4px;
+.poke-info .select2-container span.select2-chosen{
+    width: 100%;
+    float: left;
+    vertical-align: middle;
+    margin: 0;
 }
+
 .poke-info .select2-choice {
     border-radius: 0;
 }
@@ -501,7 +609,7 @@ select.toxic-counter {
 }
 
 .import-team-text {
-    min-width: 27em;
+    width: 90%;
     min-height: 10em;
     resize: vertical;
 }

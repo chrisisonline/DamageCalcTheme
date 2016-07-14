@@ -1,0 +1,539 @@
+@import 'header-nav';
+
+/* Mixins */
+@mixin transition($args) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+/* Color Codes: */
+    $dark-grey: rgb(80,80,80);
+    $light-grey1: rgb(250,250,250);
+
+    $dark-blue: #003056;
+    $blue: #04518C;
+    $light-blue: #00A1D9;
+    $teal: #47D9BF;
+    $dark-teal: #62AD9B;
+    $violet: #B9B4FF;
+    $dark-violet: #7673A3;
+    $light-tan: #FFFCE4;
+    $tan: #E0A443;
+    $dark-Tan: #614101;
+
+/* general page styling */
+
+* {
+  font-family: 'Josefin Sans', sans-serif;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+}
+
+html, body {
+  font: 10pt Verdana, sans-serif;
+  color: $dark-grey;
+  margin: 0;
+  padding: 0;
+  background-color: $light-grey1;
+}
+
+.wrapper {
+  padding: 0 1em;
+  width: 80%;
+  margin-left: 10%;
+  float: left;
+}
+
+/* Global Styling */
+.title-text {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin: 0.5em 1em 0.5em 0;
+}
+
+.big-text {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin: 0.5em 0;
+}
+
+.small-text {
+  font-size: 0.8em;
+}
+
+.btn {
+  text-align: center;
+  border-bottom: 2px solid $violet;
+  padding: 10px 0;
+  margin: 10px 1%;
+  cursor: pointer;
+  display: inline-block;
+  float: left;
+
+  &:hover {
+  z-index: 10;
+  color: white;
+  background: $dark-violet;
+
+  @include transition(all 0.2s ease-in);
+  }
+}
+
+.btn-1 {
+  width: 98%;
+}
+
+.btn-2 {
+  width: 48%;
+}
+
+.btn-3 {
+  width: 31%;
+}
+
+.btn-4 {
+  width: 23%;
+}
+
+.btn-5 {
+  width: 18%;
+}
+
+.btn-6 {
+  width: 16.6%;
+}
+
+.btn-10 {
+  width: 8%;
+}
+
+.btn-input:checked + .btn {
+  font-weight: bold;
+  color: white;
+  background: $dark-violet;
+  border: none;
+}
+
+.btn-input {
+  &[type="radio"]:checked + .btn {
+    cursor: default;
+  }
+  display: none;
+  &:disabled + .btn {
+    color: #999999;
+  }
+}
+
+.btn-group {
+  display: inline-block;
+  width: 100%;
+}
+
+fieldset {
+  float: left;
+  border: none;
+
+  legend {
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.3em;
+  }
+  input {
+    color: $dark-grey;
+    border: 0;
+    text-align: center;
+
+    &:hover {
+      @extend .btn:hover;
+    }
+  }
+  select {
+    @extend input;
+  }
+  span {
+
+  }
+
+}
+
+hr {
+  border: 1px solid #E0A443;
+}
+
+th, td {
+  padding: 0;
+  float: left;
+}
+/*Move-bar damage visualization*/
+
+.move-bar {
+  width: 100%;
+  height: 30px;
+  margin-top: 2em;
+  position: relative;
+  background-color: rgb(100, 100, 100);
+}
+
+#move-bar1 {
+  position: relative;
+  float: left;
+  width: 40%;
+  margin-left: 5%;
+  height: inherit;
+  .move-bar-base {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: inherit;
+    background-color: green;
+  }
+  .move-bar-max {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: inherit;
+    background-color: yellow;
+  }
+  .move-bar-min {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: inherit;
+    background-color: red;
+  }
+}
+
+#move-bar2 {
+  position: relative;
+  float: right;
+  width: 40%;
+  margin-right: 5%;
+  height: inherit;
+  .move-bar-base {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: inherit;
+    background-color: green;
+  }
+  .move-bar-max {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: inherit;
+    background-color: yellow;
+  }
+  .move-bar-min {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: inherit;
+    background-color: red;
+  }
+}
+
+/* Moves and Results*/
+
+.move-result-group {
+  margin: 1em 0 8em;
+
+  span[id^="resultDamage"]{
+    padding: 10px 0;
+  }
+}
+
+.move-result-subgroup {
+  float: left;
+  width: 45%;
+}
+
+.move-result-group {
+  .vs-logo {
+    background: url('VS-Logo.png') no-repeat center;
+    background-size: contain;
+    width: 10%;
+    min-height: 80px;
+  }
+  .btn {
+    padding: .8em 0;
+    margin: 0 0 .4em;
+  }
+}
+
+.main-result-group {
+  margin: 2em 0 1em;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.move-result-subgroup {
+  div {
+    float: left;
+    width: 23%;
+    margin: 0 1%;
+  }
+  span {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+.move-result-group .result-move-header {
+  font-size: .8em;
+  margin: 0 0 5px;
+  width: 100%;
+}
+
+/* Info Panels */
+
+.panel {
+  float: left;
+  display: block;
+  width: 18%;
+  margin: 0 1%;
+}
+
+.poke-panel {
+  width: 40%;
+  margin: 0;
+}
+
+.field-info, .poke-import {
+  text-align: center;
+  width: 100%;
+}
+
+.poke-info {
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  text-align: center;
+
+  div {
+    float: left;
+  }
+  label {
+    display: block;
+    width: 100%;
+  }
+  span {
+    display: inline-block;
+    float: left;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+  select {
+    display: block;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    float: left;
+    padding: 10px 0;
+  }
+  input {
+    &:not([type]), &[type="text"] {
+      @extend span;
+    }
+  }
+  input[type="number"] {
+    @extend span;
+  }
+  .info-group {
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+
+    select, input {
+        border-bottom: 2px solid $violet;
+    }
+    table {
+      width: 100%;
+
+      th {
+        padding: 5px;
+      }
+      td {
+        float: left;
+      }
+      tr {
+        padding: 5px 0;
+        width: 100%;
+        float: left;
+      }
+      a {
+        width: 4.5%;
+        position: relative;
+        padding: 10px 0;
+        float: left;
+        margin: 0;
+        border: 0;
+        text-decoration: none;
+      }
+      .btn-boosts {
+        width: 7%;
+
+        select {
+          margin: 0;
+          width: 100%;
+        }
+      }
+      select, input {
+        border-bottom: 2px solid $violet;
+        float: left;
+      }
+      input, span, label {
+        padding: 10px 0;
+      }      
+    }
+  }
+  .move-section {
+    width: 25%;
+    float: left;
+
+    input, label{
+        padding: 10px 0;
+    }
+  }
+  .crit-btn {
+    @extend .btn;
+    @extend select;
+  }
+  .total {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  .type1, .type2{
+    width: 40%;
+    margin: 0 5%;
+  }
+  .btn-2 .level {
+    padding: 10px 0; 
+  }
+  .health {
+    text-align: center;
+
+    .percent-hp {
+      padding: 10px 0;
+    }
+  }
+  .btn-2 .current-hp, .max-hp, .slash {
+    width: 33%;
+    padding: 10px 0;
+    margin: 0;
+    display: inline-block;
+  }
+}
+
+
+.field-info {
+
+  & >div {
+    width: 100%;
+  float: left;
+}
+}
+.set-selector {
+  width: 100%;
+}
+
+.move-selector, .move-bp, .move-type, .move-cat, .move-hits {
+  font-size: 0.9em;
+}
+
+.info-selectors div {
+  width: 25%;
+}
+
+.info-group {
+  label {
+    letter-spacing: 1.5px;
+  }
+  .move-selector {
+    display: block;
+    width: 100%;
+    float: left;
+  }
+}
+
+
+
+input {
+  display: block;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  float: left;
+}
+
+.poke-info .move-section .btn-input {
+  display: none;
+}
+
+
+
+.hide {
+  display: none;
+}
+
+/* select2 overrides */
+
+.select2-container .select2-choice > .select2-chosen {
+  width: 100%;
+}
+
+.wrapper {
+  .select2-container {
+    .select2-choice .select2-arrow {
+      display: none;
+    }
+    span.select2-chosen {
+      width: 100%;
+      padding: 4px 0;
+      float: left;
+      vertical-align: middle;
+      margin: 0;
+
+      &:hover {
+        @extend .btn:hover;
+      }
+    }
+  .select2-choice {
+    border-radius: 0;
+    padding: 0;
+    float: left;
+    width: 100%;
+    height: auto;
+    font-size: 0.9em;
+  }
+  }
+  
+}
+
+/* Bootstrap */
+
+.panel-group > .panel {
+  clear: left;
+}
+
+/* ColVis */
+
+.clear {
+  clear: right;
+}
+
+.import-team-text {
+  width: 90%;
+  min-height: 10em;
+  resize: vertical;
+}
