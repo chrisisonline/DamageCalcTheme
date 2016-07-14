@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <title>A Pok&eacute;mon Calculator</title>
     <link type="text/css" rel="stylesheet" href="./select2/select2.css" />
-    <link type="text/css" rel="stylesheet" href="./ap_calc.css?v2" />
     <link type="text/css" rel="stylesheet" href="./bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="style.css" />
     <!-- Customized -->
     <link href='https://fonts.googleapis.com/css?family=Work+Sans' rel='stylesheet' type='text/css'>
 </head>
@@ -28,7 +28,7 @@
 </div></div>
 <div class="wrapper">
 
-    <div>
+    <div class="hide">
         <span class="title-text">Pok&eacute;mon Damage Calculator</span>
         <span title="Select the generation.">
             <input class="gen btn-input" type="radio" name="gen" value="1" id="gen1" /><label class="btn btn-small btn-left" for="gen1">RBY</label>
@@ -48,7 +48,6 @@
             <input class="mode btn-input" type="radio" name="mode" id="one-vs-one" checked="checked" /><label class="btn btn-wide btn-left right" for="one-vs-one">One vs One</label>
         </span>
     </div>
-    <hr />
     <div class="move-bar">
         <div id="move-bar1">
             <div class="move-bar-base"></div>
@@ -119,7 +118,7 @@
         </div>
     </div>
     
-    <div class="panel">
+    <div class="panel poke-panel">
         <fieldset class="poke-info" id="p1">
             <legend align="center">Pok&eacute;mon 1</legend>
             <input type="text" class="set-selector calc-trigger" />
@@ -141,53 +140,53 @@
             <div class="info-group">
                 <table>
                     <tr>
-                        <th></th>
-                        <th>Base</th>
-                        <th class="gen-specific g3 g4 g5 g6">IVs</th>
-                        <th class="gen-specific g3 g4 g5 g6">EVs</th>
-                        <th class="gen-specific g1 g2 hide">DVs</th>
-                        <th></th>
+                        <th class="btn-6"></th>
+                        <th class="btn-6">Base</th>
+                        <th class="gen-specific btn-6 g3 g4 g5 g6">IVs</th>
+                        <th class="gen-specific btn-6 g3 g4 g5 g6">EVs</th>
+                        <th class="gen-specific btn-6 g1 g2 hide">DVs</th>
+                        <th class="btn-6"></th>
                         <th></th>
                     </tr>
                     <tr class="hp">
-                        <td>
+                        <td class="btn-6">
                             <label>HP</label>
                         </td>
-                        <td>
+                        <td class="btn-6"><span class="total">341</span>
+                        </td>
+                        <td class="btn-6">
                             <input class="base calc-trigger" value="100" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="ivs calc-trigger" value="31" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" />
                         </td>
-                        <td class="gen-specific g1 g2 hide">
+                        <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" disabled="disabled" />
-                        </td>
-                        <td><span class="total">341</span>
                         </td>
                         <td></td>
                     </tr>
                     <tr class="at">
-                        <td>
+                        <td class="btn-6">
                             <label>Attack</label>
                         </td>
-                        <td>
+                        <td class="btn-6"><span class="total">236</span>
+                        </td>
+                        <td class="btn-6">
                             <input class="base calc-trigger" value="100" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="ivs calc-trigger" value="31" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" />
                         </td>
-                        <td class="gen-specific g1 g2 hide">
+                        <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td><span class="total">236</span>
-                        </td>
-                        <td>
+                        <td class="btn-10">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -206,24 +205,24 @@
                         </td>
                     </tr>
                     <tr class="df">
-                        <td>
+                        <td class="btn-6">
                             <label>Defense</label>
                         </td>
-                        <td>
+                        <td class="btn-6"><span class="total">236</span>
+                        </td>
+                        <td class="btn-6">
                             <input class="base calc-trigger" value="100" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="ivs calc-trigger" value="31" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" />
                         </td>
-                        <td class="gen-specific g1 g2 hide">
+                        <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td><span class="total">236</span>
-                        </td>
-                        <td>
+                        <td class="btn-10">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -242,24 +241,24 @@
                         </td>
                     </tr>
                     <tr class="sa gen-specific g2 g3 g4 g5 g6">
-                        <td>
+                        <td class="btn-6">
                             <label>Sp. Atk</label>
                         </td>
-                        <td>
+                        <td class="btn-6"><span class="total">236</span>
+                        </td>
+                        <td class="btn-6">
                             <input class="base calc-trigger" value="100" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="ivs calc-trigger" value="31" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" />
                         </td>
-                        <td class="gen-specific g1 g2 hide">
+                        <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td><span class="total">236</span>
-                        </td>
-                        <td>
+                        <td class="btn-10">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -278,24 +277,24 @@
                         </td>
                     </tr>
                     <tr class="sd gen-specific g2 g3 g4 g5 g6">
-                        <td>
+                        <td class="btn-6">
                             <label>Sp. Def</label>
                         </td>
-                        <td>
+                        <td class="btn-6"><span class="total">236</span>
+                        </td>
+                        <td class="btn-6">
                             <input class="base calc-trigger" value="100" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="ivs calc-trigger" value="31" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" />
                         </td>
-                        <td class="gen-specific g1 g2 hide">
+                        <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" disabled="disabled" />
                         </td>
-                        <td><span class="total">236</span>
-                        </td>
-                        <td>
+                        <td class="btn-10">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -325,7 +324,7 @@
                         </td>
                         <td><span class="total">236</span>
                         </td>
-                        <td>
+                        <td class="btn-10">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -344,24 +343,24 @@
                         </td>
                     </tr>
                     <tr class="sp">
-                        <td>
+                        <td class="btn-6">
                             <label>Speed</label>
                         </td>
-                        <td>
+                        <td class="btn-6"><span class="total">236</span>
+                        </td>
+                        <td class="btn-6">
                             <input class="base calc-trigger" value="100" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="ivs calc-trigger" value="31" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" />
                         </td>
-                        <td class="gen-specific g1 g2 hide">
+                        <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td><span class="total">236</span>
-                        </td>
-                        <td>
+                        <td class="btn-10">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -585,26 +584,22 @@
                         <label class="btn btn-2" for="srR">Stealth Rock</label>
                 </div>
                 <div class="btn-group gen-specific g3 g4 g5 g6">
-                    <div class="left" title="Are there Spikes on this side of the field?">
-                        <input class="btn-input calc-trigger" type="radio" name="spikesL" value="0" id="spikesL0" checked="checked" />
-                        <label class="btn btn-xsmall btn-left" for="spikesL0">0</label>
-                        <input class="btn-input calc-trigger" type="radio" name="spikesL" value="1" id="spikesL1" />
-                        <label class="btn btn-xsmall btn-mid" for="spikesL1">1</label>
-                        <input class="btn-input calc-trigger" type="radio" name="spikesL" value="2" id="spikesL2" />
-                        <label class="btn btn-xsmall btn-mid" for="spikesL2">2</label>
                         <input class="btn-input calc-trigger" type="radio" name="spikesL" value="3" id="spikesL3" />
-                        <label class="btn btn-wide btn-right" for="spikesL3">3 Spikes</label>
-                    </div>
-                    <div class="right" title="Are there Spikes on this side of the field?">
+                        <label class="btn btn-5" for="spikesL3">3 Spikes</label>
+                        <input class="btn-input calc-trigger" type="radio" name="spikesL" value="2" id="spikesL2" />
+                        <label class="btn btn-10" for="spikesL2">2</label>
+                        <input class="btn-input calc-trigger" type="radio" name="spikesL" value="1" id="spikesL1" />
+                        <label class="btn btn-10" for="spikesL1">1</label>
+                        <input class="btn-input calc-trigger" type="radio" name="spikesL" value="0" id="spikesL0" checked="checked" />
+                        <label class="btn btn-10" for="spikesL0">0</label>
                         <input class="btn-input calc-trigger" type="radio" name="spikesR" value="0" id="spikesR0" checked="checked" />
-                        <label class="btn btn-xsmall btn-left" for="spikesR0">0</label>
+                        <label class="btn btn-10" for="spikesR0">0</label>
                         <input class="btn-input calc-trigger" type="radio" name="spikesR" value="1" id="spikesR1" />
-                        <label class="btn btn-xsmall btn-mid" for="spikesR1">1</label>
+                        <label class="btn btn-10" for="spikesR1">1</label>
                         <input class="btn-input calc-trigger" type="radio" name="spikesR" value="2" id="spikesR2" />
-                        <label class="btn btn-xsmall btn-mid" for="spikesR2">2</label>
+                        <label class="btn btn-10" for="spikesR2">2</label>
                         <input class="btn-input calc-trigger" type="radio" name="spikesR" value="3" id="spikesR3" />
-                        <label class="btn btn-wide btn-right" for="spikesR3">3 Spikes</label>
-                    </div>
+                        <label class="btn btn-5" for="spikesR3">3 Spikes</label>
                 </div>
                 <div class="btn-group gen-specific g2">
                     <div class="left" title="Are there Spikes on this side of the field?">
@@ -617,48 +612,32 @@
                     </div>
                 </div>
                 <div class="btn-group">
-                    <div class="left" title="Is this Pok&eacute;mon protected by Reflect and/or Light Screen?">
-                        <input class="btn-input calc-trigger" type="checkbox" id="reflectL" />
-                        <label class="btn btn-left" for="reflectL">Reflect</label>
-                        <input class="btn-input calc-trigger" type="checkbox" id="lightScreenL" />
-                        <label class="btn btn-xwide btn-right" for="lightScreenL">Light Screen</label>
-                    </div>
-                    <div class="right" title="Is this Pok&eacute;mon protected by Reflect and/or Light Screen?">
-                        <input class="btn-input calc-trigger" type="checkbox" id="reflectR" />
-                        <label class="btn btn-left" for="reflectR">Reflect</label>
-                        <input class="btn-input calc-trigger" type="checkbox" id="lightScreenR" />
-                        <label class="btn btn-xwide btn-right" for="lightScreenR">Light Screen</label>
-                    </div>
+                    <input class="btn-input calc-trigger" type="checkbox" id="lightScreenL" />
+                    <label class="btn btn-4" for="lightScreenL">Light Screen</label>
+                    <input class="btn-input calc-trigger" type="checkbox" id="reflectL" />
+                    <label class="btn btn-4" for="reflectL">Reflect</label>
+                    <input class="btn-input calc-trigger" type="checkbox" id="reflectR" />
+                    <label class="btn btn-4" for="reflectR">Reflect</label>
+                    <input class="btn-input calc-trigger" type="checkbox" id="lightScreenR" />
+                    <label class="btn btn-4" for="lightScreenR">Light Screen</label>
                 </div>
                 <div class="btn-group gen-specific g2 g3 g4 g5 g6">
-                    <div class="left" title="Has this Pok&eacute;mon been revealed with Foresight or Odor Sleuth?">
-                        <input class="btn-input calc-trigger" type="checkbox" id="foresightL" />
-                        <label class="btn btn-wide" for="foresightL">Foresight</label>
-                    </div>
-                    <div class="right" title="Has this Pok&eacute;mon been revealed with Foresight or Odor Sleuth?">
-                        <input class="btn-input calc-trigger" type="checkbox" id="foresightR" />
-                        <label class="btn btn-wide" for="foresightR">Foresight</label>
-                    </div>
+                    <input class="btn-input calc-trigger" type="checkbox" id="foresightL" />
+                    <label class="btn btn-2" for="foresightL">Foresight</label>
+                    <input class="btn-input calc-trigger" type="checkbox" id="foresightR" />
+                    <label class="btn btn-2" for="foresightR">Foresight</label>
                 </div>
                 <div class="btn-group gen-specific g3 g4 g5 g6">
-                    <div class="left" title="Has this Pok&eacute;mon's power been boosted by an ally's Helping Hand?">
-                        <input class="btn-input calc-trigger" type="checkbox" id="helpingHandL" />
-                        <label class="btn btn-xxwide" for="helpingHandL">Helping Hand</label>
-                    </div>
-                    <div class="right" title="Has this Pok&eacute;mon's power been boosted by an ally's Helping Hand?">
-                        <input class="btn-input calc-trigger" type="checkbox" id="helpingHandR" />
-                        <label class="btn btn-xxwide" for="helpingHandR">Helping Hand</label>
-                    </div>
+                    <input class="btn-input calc-trigger" type="checkbox" id="helpingHandL" />
+                    <label class="btn btn-2" for="helpingHandL">Helping Hand</label>
+                    <input class="btn-input calc-trigger" type="checkbox" id="helpingHandR" />
+                    <label class="btn btn-2" for="helpingHandR">Helping Hand</label>
                 </div>    
                 <div class="btn-group gen-specific g5 g6">
-                    <div class="left" title="Is the Pok&eacute;mon protected by an ally's Friend Guard?">
-                        <input class="btn-input calc-trigger" type="checkbox" id="friendGuardL" />
-                        <label class="btn btn-xxwide" for="friendGuardL">Friend Guard</label>
-                    </div>
-                    <div class="right" title="Is the Pok&eacute;mon protected by an ally's Friend Guard?">
-                        <input class="btn-input calc-trigger" type="checkbox" id="friendGuardR" />
-                        <label class="btn btn-xxwide" for="friendGuardR">Friend Guard</label>
-                    </div>
+                    <input class="btn-input calc-trigger" type="checkbox" id="friendGuardL" />
+                    <label class="btn btn-2" for="friendGuardL">Friend Guard</label>
+                    <input class="btn-input calc-trigger" type="checkbox" id="friendGuardR" />
+                    <label class="btn btn-2" for="friendGuardR">Friend Guard</label>
                 </div>
             </fieldset>
         </div>
@@ -674,7 +653,7 @@
             </fieldset>
         </div>
     </div>
-    <div class="panel">
+    <div class="panel poke-panel">
         <fieldset class="poke-info" id="p2">
             <legend align="center">Pok&eacute;mon 2</legend>
             <input type="text" class="set-selector calc-trigger" />
@@ -696,53 +675,53 @@
             <div class="info-group">
                 <table>
                     <tr>
-                        <th></th>
-                        <th>Base</th>
-                        <th class="gen-specific g3 g4 g5 g6">IVs</th>
-                        <th class="gen-specific g3 g4 g5 g6">EVs</th>
-                        <th class="gen-specific g1 g2 hide">DVs</th>
-                        <th></th>
+                        <th class="btn-6"></th>
+                        <th class="btn-6">Base</th>
+                        <th class="gen-specific btn-6 g3 g4 g5 g6">IVs</th>
+                        <th class="gen-specific btn-6 g3 g4 g5 g6">EVs</th>
+                        <th class="gen-specific btn-6 g1 g2 hide">DVs</th>
+                        <th class="btn-6"></th>
                         <th></th>
                     </tr>
                     <tr class="hp">
-                        <td>
+                        <td class="btn-6">
                             <label>HP</label>
                         </td>
-                        <td>
+                        <td class="btn-6"><span class="total">341</span>
+                        </td>
+                        <td class="btn-6">
                             <input class="base calc-trigger" value="100" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="ivs calc-trigger" value="31" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" />
                         </td>
-                        <td class="gen-specific g1 g2 hide">
+                        <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" disabled="disabled" />
-                        </td>
-                        <td><span class="total">341</span>
                         </td>
                         <td></td>
                     </tr>
                     <tr class="at">
-                        <td>
+                        <td class="btn-6">
                             <label>Attack</label>
                         </td>
-                        <td>
+                        <td class="btn-6"><span class="total">236</span>
+                        </td>
+                        <td class="btn-6">
                             <input class="base calc-trigger" value="100" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="ivs calc-trigger" value="31" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" />
                         </td>
-                        <td class="gen-specific g1 g2 hide">
+                        <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td><span class="total">236</span>
-                        </td>
-                        <td>
+                        <td class="btn-10">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -761,24 +740,24 @@
                         </td>
                     </tr>
                     <tr class="df">
-                        <td>
+                        <td class="btn-6">
                             <label>Defense</label>
                         </td>
-                        <td>
+                        <td class="btn-6"><span class="total">236</span>
+                        </td>
+                        <td class="btn-6">
                             <input class="base calc-trigger" value="100" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="ivs calc-trigger" value="31" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" />
                         </td>
-                        <td class="gen-specific g1 g2 hide">
+                        <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td><span class="total">236</span>
-                        </td>
-                        <td>
+                        <td class="btn-10">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -797,24 +776,24 @@
                         </td>
                     </tr>
                     <tr class="sa gen-specific g2 g3 g4 g5 g6">
-                        <td>
+                        <td class="btn-6">
                             <label>Sp. Atk</label>
                         </td>
-                        <td>
+                        <td class="btn-6"><span class="total">236</span>
+                        </td>
+                        <td class="btn-6">
                             <input class="base calc-trigger" value="100" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="ivs calc-trigger" value="31" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" />
                         </td>
-                        <td class="gen-specific g1 g2 hide">
+                        <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td><span class="total">236</span>
-                        </td>
-                        <td>
+                        <td class="btn-10">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -833,24 +812,24 @@
                         </td>
                     </tr>
                     <tr class="sd gen-specific g2 g3 g4 g5 g6">
-                        <td>
+                        <td class="btn-6">
                             <label>Sp. Def</label>
                         </td>
-                        <td>
+                        <td class="btn-6"><span class="total">236</span>
+                        </td>
+                        <td class="btn-6">
                             <input class="base calc-trigger" value="100" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="ivs calc-trigger" value="31" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" />
                         </td>
-                        <td class="gen-specific g1 g2 hide">
+                        <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" disabled="disabled" />
                         </td>
-                        <td><span class="total">236</span>
-                        </td>
-                        <td>
+                        <td class="btn-10">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -880,7 +859,7 @@
                         </td>
                         <td><span class="total">236</span>
                         </td>
-                        <td>
+                        <td class="btn-10">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -899,24 +878,24 @@
                         </td>
                     </tr>
                     <tr class="sp">
-                        <td>
+                        <td class="btn-6">
                             <label>Speed</label>
                         </td>
-                        <td>
+                        <td class="btn-6"><span class="total">236</span>
+                        </td>
+                        <td class="btn-6">
                             <input class="base calc-trigger" value="100" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="ivs calc-trigger" value="31" />
                         </td>
-                        <td class="gen-specific g3 g4 g5 g6">
+                        <td class="gen-specific btn-6 g3 g4 g5 g6">
                             <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" />
                         </td>
-                        <td class="gen-specific g1 g2 hide">
+                        <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td><span class="total">236</span>
-                        </td>
-                        <td>
+                        <td class="btn-10">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -1007,8 +986,8 @@
             </div>
             <div class="info-group">
                 <label>Current HP</label>
-                <input class="current-hp calc-trigger" value="341" />/<span class="max-hp">341</span> (
-                <input class="percent-hp calc-trigger" value="100" />%)
+                <input class="current-hp calc-trigger" value="341" />/<span class="max-hp">341</span>
+                <input class="percent-hp calc-trigger" value="100" />
             </div>
             <div class="move1">
                 <select class="move-selector calc-trigger small-select"></select>

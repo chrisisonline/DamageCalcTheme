@@ -621,9 +621,6 @@ $(document).ready(function() {
 
     /*Moves the pkm stat infront of form*/
     $( "tr" ).each(function(){
-        $(this).find('td:nth-last-child(2)').remove();
-        $(this).find('th:first-child').after( '<th></th>' );
-        $(this).find('td:first-child').after( '<td><span class="total"></span></td>' );
 
         if ($(this).attr("class")!='hp') {
             $(this).find('td:last-child').before( '<a class="btn btn-boost">-</a>' );
