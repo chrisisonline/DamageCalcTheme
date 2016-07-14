@@ -48,7 +48,7 @@
             <input class="mode btn-input" type="radio" name="mode" id="one-vs-one" checked="checked" /><label class="btn btn-wide btn-left right" for="one-vs-one">One vs One</label>
         </span>
     </div>
-    <div class="move-bar">
+    <div class="move-bar hide">
         <div id="move-bar1">
             <div class="move-bar-base"></div>
             <div class="move-bar-max"></div>
@@ -65,24 +65,24 @@
             <div class="result-move-header"><span id="resultHeaderL">Pok&eacute;mon 1's Moves (select one to show detailed results)</span>
             </div>
             <div>
+                <span id="resultDamageL1">??? - ???%</span>
                 <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveL1" checked="checked" />
                 <label class="btn btn-1" for="resultMoveL1">Hi Jump Kick</label>
-                <span id="resultDamageL1">??? - ???%</span>
             </div>
             <div>
+                <span id="resultDamageL2">??? - ???%</span>
                 <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveL2" />
                 <label class="btn btn-1" for="resultMoveL2">Falcon Punch</label>
-                <span id="resultDamageL2">??? - ???%</span>
             </div>
             <div>
+                <span id="resultDamageL3">??? - ???%</span>
                 <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveL3" />
                 <label class="btn btn-1" for="resultMoveL3">Suspicious Odor</label>
-                <span id="resultDamageL3">??? - ???%</span>
             </div>
             <div>
+                <span id="resultDamageL4">??? - ???%</span>
                 <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveL4" />
                 <label class="btn btn-1" for="resultMoveL4">Tombstoner</label>
-                <span id="resultDamageL4">??? - ???%</span>
             </div>
         </div>
         <div class="move-result-subgroup vs-logo"></div>
@@ -90,24 +90,24 @@
             <div class="result-move-header"><span id="resultHeaderR">Pok&eacute;mon 2's Moves (select one to show detailed results)</span>
             </div>
             <div>
+                <span id="resultDamageR1">??? - ???%</span>
                 <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveR1" />
                 <label class="btn btn-1" for="resultMoveR1">Hi Jump Kick</label>
-                <span id="resultDamageR1">??? - ???%</span>
             </div>
             <div>
+                <span id="resultDamageR2">??? - ???%</span>
                 <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveR2" />
                 <label class="btn btn-1" for="resultMoveR2">Falcon Punch</label>
-                <span id="resultDamageR2">??? - ???%</span>
             </div>
             <div>
+                <span id="resultDamageR3">??? - ???%</span>
                 <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveR3" />
                 <label class="btn btn-1" for="resultMoveR3">Suspicious Odor</label>
-                <span id="resultDamageR3">??? - ???%</span>
             </div>
             <div>
+                <span id="resultDamageR4">??? - ???%</span>
                 <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveR4" />
                 <label class="btn btn-1" for="resultMoveR4">Tombstoner</label>
-                <span id="resultDamageR4">??? - ???%</span>
             </div>
         </div>
     </div>
@@ -123,12 +123,14 @@
             <legend align="center">Pok&eacute;mon 1</legend>
             <input type="text" class="set-selector calc-trigger" />
             <div class="info-group">
-                <div>
+                <div class="btn-2">
                     <label>Type</label>
+                    <div class="btn-1">
                     <select class="type1 terrain-trigger calc-trigger"></select>
                     <select class="type2 terrain-trigger calc-trigger"></select>
+                    </div>
                 </div>
-                <div>
+                <div class="btn-2">
                     <label>Level</label>
                     <input class="level calc-trigger" value="100" />
                 </div>
@@ -186,7 +188,7 @@
                         <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td class="btn-10">
+                        <td class="btn-boosts">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -222,7 +224,7 @@
                         <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td class="btn-10">
+                        <td class="btn-boosts">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -258,7 +260,7 @@
                         <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td class="btn-10">
+                        <td class="btn-boosts">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -294,7 +296,7 @@
                         <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" disabled="disabled" />
                         </td>
-                        <td class="btn-10">
+                        <td class="btn-boosts">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -324,7 +326,7 @@
                         </td>
                         <td><span class="total">236</span>
                         </td>
-                        <td class="btn-10">
+                        <td class="btn-boosts">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -360,7 +362,7 @@
                         <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td class="btn-10">
+                        <td class="btn-boosts">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -451,8 +453,8 @@
             </div>
             <div class="info-group">
                 <label>Current HP</label>
-                <input class="current-hp calc-trigger" value="341" />/<span class="max-hp">341</span> (
-                <input class="percent-hp calc-trigger" value="100" />%)
+                <div class="btn-2 health"><input class="current-hp calc-trigger" value="341" /><span class="slash">/</span><span class="max-hp">341</span></div>
+                <div class="btn-2 health"><input class="percent-hp calc-trigger" value="100" /></div>
             </div>
             <div class="move1">
                 <select class="move-selector calc-trigger small-select"></select>
@@ -540,7 +542,6 @@
                     <input class="btn-input terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Grassy" id="grassy" /><label class="btn btn-3" for="grassy">Grassy Terrain</label>
                     <input class="btn-input terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Misty" id="misty" /><label class="btn btn-3" for="misty">Misty Terrain</label>
                 </div>
-                <hr class="gen-specific g6" />
                 <div class="gen-specific g3 g4 g5 g6" title="Select the current weather condition.">
                     <input class="btn-input calc-trigger" type="radio" name="weather" value="" id="clear" checked="checked" />
                     <label class="btn btn-5" for="clear">None</label>
@@ -575,7 +576,6 @@
                     <input class="btn-input calc-trigger" type="checkbox" id="gravity" />
                     <label class="btn btn-1" for="gravity">Gravity</label>
                 </div>
-                <hr class="gen-specific g2 g3 g4 g5 g6" />
                 <div class="btn-group gen-specific g4 g5 g6">
                         <input class="btn-input calc-trigger" type="checkbox" id="srL" />
                         <label class="btn btn-2" for="srL">Stealth Rock</label>
@@ -658,12 +658,12 @@
             <legend align="center">Pok&eacute;mon 2</legend>
             <input type="text" class="set-selector calc-trigger" />
             <div class="info-group">
-                <div>
+                <div class="btn-2">
                     <label>Type</label>
                     <select class="type1 terrain-trigger calc-trigger"></select>
                     <select class="type2 terrain-trigger calc-trigger"></select>
                 </div>
-                <div>
+                <div class="btn-2">
                     <label>Level</label>
                     <input class="level calc-trigger" value="100" />
                 </div>
@@ -721,7 +721,7 @@
                         <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td class="btn-10">
+                        <td class="btn-boosts">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -757,7 +757,7 @@
                         <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td class="btn-10">
+                        <td class="btn-boosts">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -793,7 +793,7 @@
                         <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td class="btn-10">
+                        <td class="btn-boosts">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -829,7 +829,7 @@
                         <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" disabled="disabled" />
                         </td>
-                        <td class="btn-10">
+                        <td class="btn-boosts">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -859,7 +859,7 @@
                         </td>
                         <td><span class="total">236</span>
                         </td>
-                        <td class="btn-10">
+                        <td class="btn-boosts">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -895,7 +895,7 @@
                         <td class="gen-specific btn-6 g1 g2 hide">
                             <input class="dvs calc-trigger" value="15" />
                         </td>
-                        <td class="btn-10">
+                        <td class="btn-boosts">
                             <select class="boost calc-trigger">
                                 <option value="6">+6</option>
                                 <option value="5">+5</option>
@@ -986,8 +986,8 @@
             </div>
             <div class="info-group">
                 <label>Current HP</label>
-                <input class="current-hp calc-trigger" value="341" />/<span class="max-hp">341</span>
-                <input class="percent-hp calc-trigger" value="100" />
+                <div class="btn-2 health"><input class="current-hp calc-trigger" value="341" /><span class="slash">/</span><span class="max-hp">341</span></div>
+                <div class="btn-2 health"><input class="percent-hp calc-trigger" value="100" /></div>
             </div>
             <div class="move1">
                 <select class="move-selector calc-trigger small-select"></select>
