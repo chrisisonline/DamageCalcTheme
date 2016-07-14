@@ -9,16 +9,21 @@ Feel free to give me suggestions on what you think should be changed :D
 * Header has been reworked so the buttons are larger, easier to press, and spaced out better.
 * Header also has a custom made Vs logo
 * Header is centered! (looks like it should have taken no time, but literally the longest section)
-* Info fields had been re-orientated (not styled yet)
+* Info fields had been re-orientated
 * Whole site should be scalable between laptop & desktop monitors (1280px+)
+* The + and - buttons make it easier to log pkm boosts (instead of having to use the dropdown menu)
+* All elements are scalable :D
 
 ####Currently under-construction:
 * Make the calculator mobile & tablet friendly (my main goal)
 * Style the page so elements look more modern (less rounded edges)
 * Possibly a dark theme (not sure)
-* The + and - buttons will make it easier to log pkm boosts (instead of having to use the dropdown menu)
 * Add a health bar to show the calcs visually
-* General tweaking :D
+* General tweaking
+
+####Other tools used
+* Sass
+* Node.js
 
 Current changes written by me! Chris Jiang 2016
 
