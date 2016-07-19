@@ -262,9 +262,10 @@ th, td {
 
 /*Move-bar damage visualization*/
 .move-bar {
+  float: left;
   width: 100%;
   height: 30px;
-  margin-top: 2em;
+  margin: 1em 0;
   position: relative;
   background-color: #646464; }
 
@@ -325,37 +326,39 @@ th, td {
     background-color: red; }
 
 /* Moves and Results*/
+.main-result-group {
+  float: left;
+  width: 100%;
+  padding: 1em 0;
+  text-align: center;
+  font-size: 1.2em; }
+
 .move-result-group {
-  margin: 1em 0 8em; }
+  float: left;
+  padding: 1em 0;
+  width: 100%; }
   .move-result-group span[id^="resultDamage"], .move-result-group .poke-info input[id^="resultDamage"]:not([type]), .poke-info .move-result-group input[id^="resultDamage"]:not([type]), .move-result-group .poke-info fieldset select[id^="resultDamage"]:not([type]), .poke-info fieldset .move-result-group select[id^="resultDamage"]:not([type]), .move-result-group fieldset .poke-info select[id^="resultDamage"]:not([type]), fieldset .poke-info .move-result-group select[id^="resultDamage"]:not([type]), .move-result-group fieldset .poke-info [id^="resultDamage"].crit-btn:not([type]), fieldset .poke-info .move-result-group [id^="resultDamage"].crit-btn:not([type]), .move-result-group .poke-info fieldset [id^="resultDamage"].crit-btn:not([type]), .poke-info fieldset .move-result-group [id^="resultDamage"].crit-btn:not([type]), .move-result-group .poke-info input[id^="resultDamage"][type="text"], .poke-info .move-result-group input[id^="resultDamage"][type="text"], .move-result-group .poke-info fieldset select[id^="resultDamage"][type="text"], .poke-info fieldset .move-result-group select[id^="resultDamage"][type="text"], .move-result-group fieldset .poke-info select[id^="resultDamage"][type="text"], fieldset .poke-info .move-result-group select[id^="resultDamage"][type="text"], .move-result-group fieldset .poke-info [id^="resultDamage"][type="text"].crit-btn, fieldset .poke-info .move-result-group [id^="resultDamage"][type="text"].crit-btn, .move-result-group .poke-info fieldset [id^="resultDamage"][type="text"].crit-btn, .poke-info fieldset .move-result-group [id^="resultDamage"][type="text"].crit-btn, .move-result-group .poke-info input[id^="resultDamage"][type="number"], .poke-info .move-result-group input[id^="resultDamage"][type="number"], .move-result-group .poke-info fieldset select[id^="resultDamage"][type="number"], .poke-info fieldset .move-result-group select[id^="resultDamage"][type="number"], .move-result-group fieldset .poke-info select[id^="resultDamage"][type="number"], fieldset .poke-info .move-result-group select[id^="resultDamage"][type="number"], .move-result-group fieldset .poke-info [id^="resultDamage"][type="number"].crit-btn, fieldset .poke-info .move-result-group [id^="resultDamage"][type="number"].crit-btn, .move-result-group .poke-info fieldset [id^="resultDamage"][type="number"].crit-btn, .poke-info fieldset .move-result-group [id^="resultDamage"][type="number"].crit-btn {
     padding: 10px 0; }
+  .move-result-group .vs-logo {
+    background: url("VS-Logo.png") no-repeat center;
+    background-size: contain;
+    width: 10%;
+    min-height: 80px; }
+  .move-result-group .btn, .move-result-group .poke-info .crit-btn, .poke-info .move-result-group .crit-btn {
+    padding: .8em 0;
+    margin: 0 0 .4em; }
 
 .move-result-subgroup {
   float: left;
   width: 45%; }
-
-.move-result-group .vs-logo {
-  background: url("VS-Logo.png") no-repeat center;
-  background-size: contain;
-  width: 10%;
-  min-height: 80px; }
-.move-result-group .btn, .move-result-group .poke-info .crit-btn, .poke-info .move-result-group .crit-btn {
-  padding: .8em 0;
-  margin: 0 0 .4em; }
-
-.main-result-group {
-  margin: 2em 0 1em;
-  text-align: center;
-  font-size: 1.2em; }
-
-.move-result-subgroup div {
-  float: left;
-  width: 23%;
-  margin: 0 1%; }
-.move-result-subgroup span, .move-result-subgroup .poke-info input:not([type]), .poke-info .move-result-subgroup input:not([type]), .move-result-subgroup .poke-info fieldset select:not([type]), .poke-info fieldset .move-result-subgroup select:not([type]), .move-result-subgroup fieldset .poke-info select:not([type]), fieldset .poke-info .move-result-subgroup select:not([type]), .move-result-subgroup fieldset .poke-info .crit-btn:not([type]), fieldset .poke-info .move-result-subgroup .crit-btn:not([type]), .move-result-subgroup .poke-info fieldset .crit-btn:not([type]), .poke-info fieldset .move-result-subgroup .crit-btn:not([type]), .move-result-subgroup .poke-info input[type="text"], .poke-info .move-result-subgroup input[type="text"], .move-result-subgroup .poke-info fieldset select[type="text"], .poke-info fieldset .move-result-subgroup select[type="text"], .move-result-subgroup fieldset .poke-info select[type="text"], fieldset .poke-info .move-result-subgroup select[type="text"], .move-result-subgroup fieldset .poke-info [type="text"].crit-btn, fieldset .poke-info .move-result-subgroup [type="text"].crit-btn, .move-result-subgroup .poke-info fieldset [type="text"].crit-btn, .poke-info fieldset .move-result-subgroup [type="text"].crit-btn, .move-result-subgroup .poke-info input[type="number"], .poke-info .move-result-subgroup input[type="number"], .move-result-subgroup .poke-info fieldset select[type="number"], .poke-info fieldset .move-result-subgroup select[type="number"], .move-result-subgroup fieldset .poke-info select[type="number"], fieldset .poke-info .move-result-subgroup select[type="number"], .move-result-subgroup fieldset .poke-info [type="number"].crit-btn, fieldset .poke-info .move-result-subgroup [type="number"].crit-btn, .move-result-subgroup .poke-info fieldset [type="number"].crit-btn, .poke-info fieldset .move-result-subgroup [type="number"].crit-btn {
-  display: block;
-  text-align: center;
-  font-weight: bold; }
+  .move-result-subgroup div {
+    float: left;
+    width: 23%;
+    margin: 0 1%; }
+  .move-result-subgroup span, .move-result-subgroup .poke-info input:not([type]), .poke-info .move-result-subgroup input:not([type]), .move-result-subgroup .poke-info fieldset select:not([type]), .poke-info fieldset .move-result-subgroup select:not([type]), .move-result-subgroup fieldset .poke-info select:not([type]), fieldset .poke-info .move-result-subgroup select:not([type]), .move-result-subgroup fieldset .poke-info .crit-btn:not([type]), fieldset .poke-info .move-result-subgroup .crit-btn:not([type]), .move-result-subgroup .poke-info fieldset .crit-btn:not([type]), .poke-info fieldset .move-result-subgroup .crit-btn:not([type]), .move-result-subgroup .poke-info input[type="text"], .poke-info .move-result-subgroup input[type="text"], .move-result-subgroup .poke-info fieldset select[type="text"], .poke-info fieldset .move-result-subgroup select[type="text"], .move-result-subgroup fieldset .poke-info select[type="text"], fieldset .poke-info .move-result-subgroup select[type="text"], .move-result-subgroup fieldset .poke-info [type="text"].crit-btn, fieldset .poke-info .move-result-subgroup [type="text"].crit-btn, .move-result-subgroup .poke-info fieldset [type="text"].crit-btn, .poke-info fieldset .move-result-subgroup [type="text"].crit-btn, .move-result-subgroup .poke-info input[type="number"], .poke-info .move-result-subgroup input[type="number"], .move-result-subgroup .poke-info fieldset select[type="number"], .poke-info fieldset .move-result-subgroup select[type="number"], .move-result-subgroup fieldset .poke-info select[type="number"], fieldset .poke-info .move-result-subgroup select[type="number"], .move-result-subgroup fieldset .poke-info [type="number"].crit-btn, fieldset .poke-info .move-result-subgroup [type="number"].crit-btn, .move-result-subgroup .poke-info fieldset [type="number"].crit-btn, .poke-info fieldset .move-result-subgroup [type="number"].crit-btn {
+    display: block;
+    text-align: center;
+    font-weight: bold; }
 
 .move-result-group .result-move-header {
   font-size: .8em;
@@ -440,7 +443,6 @@ th, td {
     .poke-info .move-section input, .poke-info .move-section fieldset select, fieldset .poke-info .move-section select, fieldset .poke-info .move-section .crit-btn, .poke-info .move-section fieldset .crit-btn, .poke-info fieldset .move-section .crit-btn, .poke-info .move-section label {
       padding: 10px 0; }
   .poke-info .total {
-    font-weight: bold;
     font-size: 1.2em; }
   .poke-info .type1, .poke-info .type2 {
     width: 40%;
