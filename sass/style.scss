@@ -1,6 +1,6 @@
-@import 'bootstrap';
-@import 'select2/select2';
-@import 'header-nav';
+@import "bootstrap";
+@import "select2/select2";
+@import "header-nav";
 
 /* Mixins */
 @mixin transition($args) {
@@ -12,19 +12,19 @@
 }
 
 /* Color Codes: */
-    $dark-grey: rgb(80,80,80);
-    $light-grey1: rgb(250,250,250);
+$dark-grey: rgb(80, 80, 80);
+$light-grey1: rgb(250, 250, 250);
 
-    $dark-blue: #003056;
-    $blue: #04518C;
-    $light-blue: #00A1D9;
-    $teal: #47D9BF;
-    $dark-teal: #62AD9B;
-    $violet: #B9B4FF;
-    $dark-violet: #7673A3;
-    $light-tan: #FFFCE4;
-    $tan: #E0A443;
-    $dark-Tan: #614101;
+$dark-blue: #003056;
+$blue: #04518C;
+$light-blue: #00A1D9;
+$teal: #47D9BF;
+$dark-teal: #62AD9B;
+$violet: #B9B4FF;
+$dark-violet: #7673A3;
+$light-tan: #FFFCE4;
+$tan: #E0A443;
+$dark-Tan: #614101;
 
 /* general page styling */
 
@@ -76,11 +76,11 @@ html, body {
   float: left;
 
   &:hover {
-  z-index: 10;
-  color: white;
-  background: $dark-violet;
+    z-index: 10;
+    color: white;
+    background: $dark-violet;
 
-  @include transition(all 0.2s ease-in);
+    @include transition(all 0.2s ease-in);
   }
 }
 
@@ -123,7 +123,9 @@ html, body {
   &[type="radio"]:checked + .btn {
     cursor: default;
   }
+
   display: none;
+
   &:disabled + .btn {
     color: #999999;
   }
@@ -143,6 +145,7 @@ fieldset {
     text-align: center;
     font-size: 1.3em;
   }
+
   input {
     color: $dark-grey;
     border: 0;
@@ -152,13 +155,12 @@ fieldset {
       @extend .btn:hover;
     }
   }
+
   select {
     @extend input;
   }
-  span {
 
-  }
-
+  span {}
 }
 
 hr {
@@ -187,6 +189,7 @@ th, td {
   width: 40%;
   margin-left: 5%;
   height: inherit;
+
   .move-bar-base {
     position: absolute;
     top: 0;
@@ -195,6 +198,7 @@ th, td {
     height: inherit;
     background-color: green;
   }
+
   .move-bar-max {
     position: absolute;
     top: 0;
@@ -203,6 +207,7 @@ th, td {
     height: inherit;
     background-color: yellow;
   }
+
   .move-bar-min {
     position: absolute;
     top: 0;
@@ -219,6 +224,7 @@ th, td {
   width: 40%;
   margin-right: 5%;
   height: inherit;
+
   .move-bar-base {
     position: absolute;
     top: 0;
@@ -227,6 +233,7 @@ th, td {
     height: inherit;
     background-color: green;
   }
+
   .move-bar-max {
     position: absolute;
     top: 0;
@@ -235,6 +242,7 @@ th, td {
     height: inherit;
     background-color: yellow;
   }
+
   .move-bar-min {
     position: absolute;
     top: 0;
@@ -254,21 +262,22 @@ th, td {
   font-size: 1.2em;
 }
 
-
 .move-result-group {
   float: left;
   padding: 1em 0;
   width: 100%;
 
-  span[id^="resultDamage"]{
+  span[id^="resultDamage"] {
     padding: 10px 0;
   }
+
   .vs-logo {
-    background: url('/img/VS-Logo.png') no-repeat center;
+    background: url("/img/VS-Logo.png") no-repeat center;
     background-size: contain;
     width: 10%;
     min-height: 80px;
   }
+
   .btn {
     padding: .8em 0;
     margin: 0 0 .4em;
@@ -284,6 +293,7 @@ th, td {
     width: 23%;
     margin: 0 1%;
   }
+
   span {
     display: block;
     text-align: center;
@@ -325,10 +335,12 @@ th, td {
   div {
     float: left;
   }
+
   label {
     display: block;
     width: 100%;
   }
+
   span {
     display: inline-block;
     float: left;
@@ -336,6 +348,7 @@ th, td {
     margin-left: 15%;
     margin-right: 15%;
   }
+
   select {
     display: block;
     width: 80%;
@@ -344,36 +357,43 @@ th, td {
     float: left;
     padding: 10px 0;
   }
+
   input {
     &:not([type]), &[type="text"] {
       @extend span;
     }
   }
+
   input[type="number"] {
     @extend span;
   }
+
   .info-group {
     text-align: center;
     width: 100%;
     margin-top: 20px;
 
     select, input {
-        border-bottom: 2px solid $violet;
+      border-bottom: 2px solid $violet;
     }
+
     table {
       width: 100%;
 
       th {
         padding: 5px;
       }
+
       td {
         float: left;
       }
+
       tr {
         padding: 5px 0;
         width: 100%;
         float: left;
       }
+
       a {
         width: 4.5%;
         position: relative;
@@ -383,6 +403,7 @@ th, td {
         border: 0;
         text-decoration: none;
       }
+
       .btn-boosts {
         width: 7%;
 
@@ -391,37 +412,46 @@ th, td {
           width: 100%;
         }
       }
+
       select, input {
         border-bottom: 2px solid $violet;
         float: left;
       }
+
       input, span, label {
         padding: 10px 0;
-      }      
+      }
     }
   }
+
   .move-section {
     width: 25%;
     float: left;
 
-    input, label{
-        padding: 10px 0;
+    input, label {
+      padding: 10px 0;
     }
   }
+
   .crit-btn {
     @extend .btn;
+
     @extend select;
   }
+
   .total {
     font-size: 1.2em;
   }
-  .type1, .type2{
+
+  .type1, .type2 {
     width: 40%;
     margin: 0 5%;
   }
+
   .btn-2 .level {
-    padding: 10px 0; 
+    padding: 10px 0;
   }
+
   .health {
     text-align: center;
 
@@ -429,6 +459,7 @@ th, td {
       padding: 10px 0;
     }
   }
+
   .btn-2 .current-hp, .max-hp, .slash {
     width: 33%;
     padding: 10px 0;
@@ -437,14 +468,13 @@ th, td {
   }
 }
 
-
 .field-info {
-
-  & >div {
+  & > div {
     width: 100%;
-  float: left;
+    float: left;
+  }
 }
-}
+
 .set-selector {
   width: 100%;
 }
@@ -461,14 +491,13 @@ th, td {
   label {
     letter-spacing: 1.5px;
   }
+
   .move-selector {
     display: block;
     width: 100%;
     float: left;
   }
 }
-
-
 
 input {
   display: block;
@@ -481,8 +510,6 @@ input {
 .poke-info .move-section .btn-input {
   display: none;
 }
-
-
 
 .hide {
   display: none;
@@ -499,6 +526,7 @@ input {
     .select2-choice .select2-arrow {
       display: none;
     }
+
     span.select2-chosen {
       width: 100%;
       padding: 4px 0;
@@ -510,16 +538,16 @@ input {
         @extend .btn:hover;
       }
     }
-  .select2-choice {
-    border-radius: 0;
-    padding: 0;
-    float: left;
-    width: 100%;
-    height: auto;
-    font-size: 0.9em;
+
+    .select2-choice {
+      border-radius: 0;
+      padding: 0;
+      float: left;
+      width: 100%;
+      height: auto;
+      font-size: 0.9em;
+    }
   }
-  }
-  
 }
 
 /* Bootstrap */

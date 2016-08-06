@@ -2083,6 +2083,255 @@ function getSimpleModifiedStat(stat, mod) {
             : stat;
 }
 
+function CALCULATE_ALL_MOVES_ADV(p1, p2, field) {
+    checkAirLock(p1, field);
+    checkAirLock(p2, field);
+    checkForecast(p1, field.getWeather());
+    checkForecast(p2, field.getWeather());
+    checkIntimidate(p1, p2);
+    checkIntimidate(p2, p1);
+    var side1 = field.getSide(1);
+    var side2 = field.getSide(0);
+    var results = [[],[]];
+    for (var i = 0; i < 4; i++) {
+        results[0][i] = CALCULATE_DAMAGE_ADV(p1, p2, p1.moves[i], side1);
+        results[1][i] = CALCULATE_DAMAGE_ADV(p2, p1, p2.moves[i], side2);
+    }
+    return results;
+}
+
+function CALCULATE_MOVES_OF_ATTACKER_ADV(attacker, defender, field) {
+    checkAirLock(attacker, field);
+    checkAirLock(defender, field);
+    checkForecast(attacker, field.getWeather());
+    checkForecast(defender, field.getWeather());
+    checkIntimidate(attacker, defender);
+    checkIntimidate(defender, attacker);
+    var defenderSide = field.getSide( ~~(mode === "one-vs-all") );
+    var results = [];
+    for (var i = 0; i < 4; i++) {
+        results[i] = CALCULATE_DAMAGE_ADV(attacker, defender, attacker.moves[i], defenderSide);
+    }
+    return results;
+}
+
+function CALCULATE_DAMAGE_ADV(attacker, defender, move, field) {
+    var description = {
+        "attackerName": attacker.name,
+        "moveName": move.name,
+        "defenderName": defender.name
+    };
+    
+    if (move.bp === 0) {
+        return {"damage":[0], "description":buildDescription(description)};
+    }
+    
+    if (move.name === "Weather Ball") {
+        move.type = field.weather === "Sun" ? "Fire"
+                : field.weather === "Rain" ? "Water"
+                : field.weather === "Sand" ? "Rock"
+                : field.weather === "Hail" ? "Ice"
+                : "Normal";
+        description.weather = field.weather;
+        description.moveType = move.type;
+        description.moveBP = move.bp;
+    }
+    
+    var typeEffect1 = getMoveEffectiveness(move, defender.type1, field.isForesight);
+    var typeEffect2 = defender.type2 ? getMoveEffectiveness(move, defender.type2, field.isForesight) : 1;
+    var typeEffectiveness = typeEffect1 * typeEffect2;
+
+    if (typeEffectiveness === 0) {
+        return {"damage":[0], "description":buildDescription(description)};
+    }
+    
+    if ((defender.ability.indexOf("Flash Fire") !== -1 && move.type === "Fire") ||
+            (defender.ability === "Levitate" && move.type === "Ground") ||
+            (defender.ability === "Volt Absorb" && move.type === "Electric") ||
+            (defender.ability === "Water Absorb" && move.type === "Water") ||
+            (defender.ability === "Wonder Guard" && typeEffectiveness <= 1) ||
+            (defender.ability === "Soundproof" && move.isSound)) {
+        description.defenderAbility = defender.ability;
+        return {"damage":[0], "description":buildDescription(description)};
+    }
+    
+    description.HPEVs = defender.HPEVs + " HP";
+    
+    var lv = attacker.level;
+    if (move.name === "Seismic Toss" || move.name === "Night Shade") {
+        return {"damage":[lv], "description":buildDescription(description)};
+    }
+    
+    if (move.hits > 1) {
+        description.hits = move.hits;
+    }
+
+    var bp;
+    switch (move.name) {
+        case "Flail":
+        case "Reversal":
+            var p = Math.floor(48 * attacker.curHP / attacker.maxHP);
+            bp = p <= 1 ? 200 : p <= 4 ? 150 : p <= 9 ? 100 : p <= 16 ? 80 : p <= 32 ? 40 : 20;
+            description.moveBP = bp;
+            break;
+        case "Eruption":
+        case "Water Spout":
+            bp = Math.max(1, Math.floor(150 * attacker.curHP / attacker.maxHP));
+            description.moveBP = bp;
+            break;
+        case "Low Kick":
+            var w = defender.weight;
+            bp = w >= 200 ? 120 : w >= 100 ? 100 : w >= 50 ? 80 : w >= 25 ? 60 : w >= 10 ? 40 : 20;
+            description.moveBP = bp;
+            break;
+        default:
+            bp = move.bp;
+    }
+    
+    var isPhysical = typeChart[move.type].category === "Physical";
+    var attackStat = isPhysical ? AT : SA;
+    description.attackEVs = attacker.evs[attackStat] +
+            (NATURES[attacker.nature][0] === attackStat ? "+" : NATURES[attacker.nature][1] === attackStat ? "-" : "") + " " +
+            toSmogonStat(attackStat);
+    var defenseStat = isPhysical ? DF : SD;
+    description.defenseEVs = defender.evs[defenseStat] +
+            (NATURES[defender.nature][0] === defenseStat ? "+" : NATURES[defender.nature][1] === defenseStat ? "-" : "") + " " +
+            toSmogonStat(defenseStat);
+    var at = attacker.rawStats[attackStat];
+    var df = defender.rawStats[defenseStat];
+    
+    if (isPhysical && (attacker.ability === "Huge Power" || attacker.ability === "Pure Power")) {
+        at *= 2;
+        description.attackerAbility = attacker.ability;
+    }
+    
+    if (getItemBoostType(attacker.item) === move.type) {
+        at = Math.floor(at * 1.1);
+        description.attackerItem = attacker.item;
+    } else if ((isPhysical && attacker.item === "Choice Band") ||
+            (!isPhysical && attacker.item === "Soul Dew" && (attacker.name === "Latios" || attacker.name === "Latias"))) {
+        at = Math.floor(at * 1.5);
+        description.attackerItem = attacker.item;
+    } else if ((!isPhysical && attacker.item === "Deep Sea Tooth" && attacker.name === "Clamperl") ||
+            (!isPhysical && attacker.item === "Light Ball" && attacker.name === "Pikachu") ||
+            (isPhysical && attacker.item === "Thick Club" && (attacker.name === "Cubone" || attacker.name === "Marowak"))) {
+        at *= 2;
+        description.attackerItem = attacker.item;
+    }
+    
+    if (!isPhysical && defender.item === "Soul Dew" && (defender.name === "Latios" || defender.name === "Latias")) {
+        df = Math.floor(df * 1.5);
+        description.defenderItem = defender.item;
+    } else if ((!isPhysical && defender.item === "Deep Sea Scale" && defender.name === "Clamperl") ||
+            (isPhysical && defender.item === "Metal Powder" && defender.name === "Ditto")) {
+        df *= 2;
+        description.defenderItem = defender.item;
+    }
+    
+    if (defender.ability === "Thick Fat" && (move.type === "Fire" || move.type === "Ice")) {
+        at = Math.floor(at / 2);
+        description.defenderAbility = defender.ability;
+    } else if (isPhysical && defender.ability === "Marvel Scale" && defender.status !== "Healthy") {
+        df = Math.floor(df * 1.5);
+        description.defenderAbility = defender.ability;
+    }
+    
+    if (isPhysical && (attacker.ability === "Hustle" || (attacker.ability === "Guts" && attacker.status !== "Healthy"))) {
+        at = Math.floor(at * 1.5);
+        description.attackerAbility = attacker.ability;
+    } else if (attacker.curHP <= attacker.maxHP / 3 &&
+            ((attacker.ability === "Overgrow" && move.type === "Grass") ||
+            (attacker.ability === "Blaze" && move.type === "Fire") ||
+            (attacker.ability === "Torrent" && move.type === "Water") ||
+            (attacker.ability === "Swarm" && move.type === "Bug"))) {
+        bp = Math.floor(bp * 1.5);
+        description.attackerAbility = attacker.ability;
+    }
+    
+    if (move.name === "Explosion" || move.name === "Self-Destruct") {
+        df = Math.floor(df / 2);
+    }
+    
+    var isCritical = move.isCrit && ["Battle Armor", "Shell Armor"].indexOf(defender.ability) === -1;
+    
+    var attackBoost = attacker.boosts[attackStat];
+    var defenseBoost = defender.boosts[defenseStat];
+    if (attackBoost > 0 || (!isCritical && attackBoost < 0)) {
+        at = getModifiedStat(at, attackBoost);
+        description.attackBoost = attackBoost;
+    }
+    if (defenseBoost < 0 || (!isCritical && defenseBoost > 0)) {
+        df = getModifiedStat(df, defenseBoost);
+        description.defenseBoost = defenseBoost;
+    }
+    
+    var baseDamage = Math.floor(Math.floor(Math.floor(2 * lv / 5 + 2) * at * bp / df) / 50);
+    
+    if (attacker.status === "Burned" && isPhysical && attacker.ability !== "Guts") {
+        baseDamage = Math.floor(baseDamage / 2);
+        description.isBurned = true;
+    }
+    
+    if (!isCritical) {
+        var screenMultiplier = field.format !== "Singles" ? (2/3) : (1/2);
+        if (isPhysical && field.isReflect) {
+            baseDamage = Math.floor(baseDamage * screenMultiplier); 
+            description.isReflect = true;
+        } else if (!isPhysical && field.isLightScreen) {
+            baseDamage = Math.floor(baseDamage * screenMultiplier); 
+            description.isLightScreen = true;
+        }
+    }
+
+    if (field.format !== "Singles" && move.isSpread) {
+        // some sources say 3/4, some say 2/3, some say 1/2...using 3/4 for now since that's what DPP+ use
+        baseDamage = Math.floor(baseDamage * 3/4);
+    }
+    
+    if ((field.weather === "Sun" && move.type === "Fire") || (field.weather === "Rain" && move.type === "Water")) {
+        baseDamage = Math.floor(baseDamage * 1.5);
+        description.weather = field.weather;
+    } else if ((field.weather === "Sun" && move.type === "Water") || (field.weather === "Rain" && move.type === "Fire") ||
+            (move.name === "Solar Beam" && ["Rain", "Sand", "Hail"].indexOf(field.weather) !== -1)) {
+        baseDamage = Math.floor(baseDamage / 2);
+        description.weather = field.weather;
+    }
+
+    if (attacker.ability === "Flash Fire (activated)" && move.type === "Fire") {
+        baseDamage = Math.floor(baseDamage * 1.5);
+        description.attackerAbility = "Flash Fire";
+    }
+    
+    baseDamage = Math.max(1, baseDamage) + 2;
+    
+    if (isCritical) {
+        baseDamage *= 2;
+        description.isCritical = true;
+    }
+    
+    if (move.name === "Weather Ball" && field.weather !== "") {
+        baseDamage *= 2;
+        description.moveBP = move.bp * 2;
+    }
+    
+    if (field.isHelpingHand) {
+        baseDamage = Math.floor(baseDamage * 1.5);
+        description.isHelpingHand = true;
+    }
+    
+    if (move.type === attacker.type1 || move.type === attacker.type2) {
+        baseDamage = Math.floor(baseDamage * 1.5);
+    }
+    
+    baseDamage = Math.floor(baseDamage * typeEffectiveness);
+    
+    var damage = [];
+    for (var i = 85; i <= 100; i++) {
+        damage[i-85] = Math.max(1, Math.floor(baseDamage * i / 100));
+    }
+    return {"damage":damage, "description":buildDescription(description)};
+}
+
 function CALCULATE_ALL_MOVES_GSC(p1, p2, field) {
     p1.stats[AT] = Math.min(999, Math.max(1, getModifiedStat(p1.rawStats[AT], p1.boosts[AT])));
     p1.stats[DF] = Math.min(999, Math.max(1, getModifiedStat(p1.rawStats[DF], p1.boosts[DF])));
@@ -2360,253 +2609,311 @@ function CALCULATE_DAMAGE_RBY(attacker, defender, move, field) {
     return {"damage":damage, "description":buildDescription(description)};
 }
 
-function CALCULATE_ALL_MOVES_ADV(p1, p2, field) {
-    checkAirLock(p1, field);
-    checkAirLock(p2, field);
-    checkForecast(p1, field.getWeather());
-    checkForecast(p2, field.getWeather());
-    checkIntimidate(p1, p2);
-    checkIntimidate(p2, p1);
-    var side1 = field.getSide(1);
-    var side2 = field.getSide(0);
-    var results = [[],[]];
-    for (var i = 0; i < 4; i++) {
-        results[0][i] = CALCULATE_DAMAGE_ADV(p1, p2, p1.moves[i], side1);
-        results[1][i] = CALCULATE_DAMAGE_ADV(p2, p1, p2.moves[i], side2);
+function getKOChanceText(damage, defender, field, hits, isBadDreams) {
+    if (isNaN(damage[0])) {
+        return 'something broke; please tell Austin or Marty';
     }
-    return results;
-}
-
-function CALCULATE_MOVES_OF_ATTACKER_ADV(attacker, defender, field) {
-    checkAirLock(attacker, field);
-    checkAirLock(defender, field);
-    checkForecast(attacker, field.getWeather());
-    checkForecast(defender, field.getWeather());
-    checkIntimidate(attacker, defender);
-    checkIntimidate(defender, attacker);
-    var defenderSide = field.getSide( ~~(mode === "one-vs-all") );
-    var results = [];
-    for (var i = 0; i < 4; i++) {
-        results[i] = CALCULATE_DAMAGE_ADV(attacker, defender, attacker.moves[i], defenderSide);
+    if (damage[damage.length-1] === 0) {
+        return 'aim for the horn next time';
     }
-    return results;
-}
-
-function CALCULATE_DAMAGE_ADV(attacker, defender, move, field) {
-    var description = {
-        "attackerName": attacker.name,
-        "moveName": move.name,
-        "defenderName": defender.name
-    };
-    
-    if (move.bp === 0) {
-        return {"damage":[0], "description":buildDescription(description)};
-    }
-    
-    if (move.name === "Weather Ball") {
-        move.type = field.weather === "Sun" ? "Fire"
-                : field.weather === "Rain" ? "Water"
-                : field.weather === "Sand" ? "Rock"
-                : field.weather === "Hail" ? "Ice"
-                : "Normal";
-        description.weather = field.weather;
-        description.moveType = move.type;
-        description.moveBP = move.bp;
-    }
-    
-    var typeEffect1 = getMoveEffectiveness(move, defender.type1, field.isForesight);
-    var typeEffect2 = defender.type2 ? getMoveEffectiveness(move, defender.type2, field.isForesight) : 1;
-    var typeEffectiveness = typeEffect1 * typeEffect2;
-
-    if (typeEffectiveness === 0) {
-        return {"damage":[0], "description":buildDescription(description)};
-    }
-    
-    if ((defender.ability.indexOf("Flash Fire") !== -1 && move.type === "Fire") ||
-            (defender.ability === "Levitate" && move.type === "Ground") ||
-            (defender.ability === "Volt Absorb" && move.type === "Electric") ||
-            (defender.ability === "Water Absorb" && move.type === "Water") ||
-            (defender.ability === "Wonder Guard" && typeEffectiveness <= 1) ||
-            (defender.ability === "Soundproof" && move.isSound)) {
-        description.defenderAbility = defender.ability;
-        return {"damage":[0], "description":buildDescription(description)};
-    }
-    
-    description.HPEVs = defender.HPEVs + " HP";
-    
-    var lv = attacker.level;
-    if (move.name === "Seismic Toss" || move.name === "Night Shade") {
-        return {"damage":[lv], "description":buildDescription(description)};
-    }
-    
-    if (move.hits > 1) {
-        description.hits = move.hits;
+    if (damage[0] >= defender.maxHP) {
+        return 'guaranteed OHKO';
     }
 
-    var bp;
-    switch (move.name) {
-        case "Flail":
-        case "Reversal":
-            var p = Math.floor(48 * attacker.curHP / attacker.maxHP);
-            bp = p <= 1 ? 200 : p <= 4 ? 150 : p <= 9 ? 100 : p <= 16 ? 80 : p <= 32 ? 40 : 20;
-            description.moveBP = bp;
-            break;
-        case "Eruption":
-        case "Water Spout":
-            bp = Math.max(1, Math.floor(150 * attacker.curHP / attacker.maxHP));
-            description.moveBP = bp;
-            break;
-        case "Low Kick":
-            var w = defender.weight;
-            bp = w >= 200 ? 120 : w >= 100 ? 100 : w >= 50 ? 80 : w >= 25 ? 60 : w >= 10 ? 40 : 20;
-            description.moveBP = bp;
-            break;
-        default:
-            bp = move.bp;
+    var hazards = 0;
+    var hazardText = [];
+    if (field.isSR && defender.ability !== 'Magic Guard') {
+        var effectiveness = typeChart['Rock'][defender.type1] * (defender.type2 ? typeChart['Rock'][defender.type2] : 1);
+        hazards += Math.floor(effectiveness * defender.maxHP / 8);
+        hazardText.push('Stealth Rock');
     }
-    
-    var isPhysical = typeChart[move.type].category === "Physical";
-    var attackStat = isPhysical ? AT : SA;
-    description.attackEVs = attacker.evs[attackStat] +
-            (NATURES[attacker.nature][0] === attackStat ? "+" : NATURES[attacker.nature][1] === attackStat ? "-" : "") + " " +
-            toSmogonStat(attackStat);
-    var defenseStat = isPhysical ? DF : SD;
-    description.defenseEVs = defender.evs[defenseStat] +
-            (NATURES[defender.nature][0] === defenseStat ? "+" : NATURES[defender.nature][1] === defenseStat ? "-" : "") + " " +
-            toSmogonStat(defenseStat);
-    var at = attacker.rawStats[attackStat];
-    var df = defender.rawStats[defenseStat];
-    
-    if (isPhysical && (attacker.ability === "Huge Power" || attacker.ability === "Pure Power")) {
-        at *= 2;
-        description.attackerAbility = attacker.ability;
+    if ([defender.type1, defender.type2].indexOf('Flying') === -1 &&
+            ['Magic Guard', 'Levitate'].indexOf(defender.ability) === -1 && defender.item !== 'Air Balloon') {
+        if (field.spikes === 1) {
+            hazards += Math.floor(defender.maxHP / 8);
+            if (gen === 2) {
+                hazardText.push('Spikes');
+            } else {
+                hazardText.push('1 layer of Spikes');
+            }
+        } else if (field.spikes === 2) {
+            hazards += Math.floor(defender.maxHP / 6);
+            hazardText.push('2 layers of Spikes');
+        } else if (field.spikes === 3) {
+            hazards += Math.floor(defender.maxHP / 4);
+            hazardText.push('3 layers of Spikes');
+        }
     }
-    
-    if (getItemBoostType(attacker.item) === move.type) {
-        at = Math.floor(at * 1.1);
-        description.attackerItem = attacker.item;
-    } else if ((isPhysical && attacker.item === "Choice Band") ||
-            (!isPhysical && attacker.item === "Soul Dew" && (attacker.name === "Latios" || attacker.name === "Latias"))) {
-        at = Math.floor(at * 1.5);
-        description.attackerItem = attacker.item;
-    } else if ((!isPhysical && attacker.item === "Deep Sea Tooth" && attacker.name === "Clamperl") ||
-            (!isPhysical && attacker.item === "Light Ball" && attacker.name === "Pikachu") ||
-            (isPhysical && attacker.item === "Thick Club" && (attacker.name === "Cubone" || attacker.name === "Marowak"))) {
-        at *= 2;
-        description.attackerItem = attacker.item;
+    if (isNaN(hazards)) {
+        hazards = 0;
     }
-    
-    if (!isPhysical && defender.item === "Soul Dew" && (defender.name === "Latios" || defender.name === "Latias")) {
-        df = Math.floor(df * 1.5);
-        description.defenderItem = defender.item;
-    } else if ((!isPhysical && defender.item === "Deep Sea Scale" && defender.name === "Clamperl") ||
-            (isPhysical && defender.item === "Metal Powder" && defender.name === "Ditto")) {
-        df *= 2;
-        description.defenderItem = defender.item;
+
+    var eot = 0;
+    var eotText = [];
+    if (field.weather === 'Sun' || field.weather === "Harsh Sunshine") {
+        if (defender.ability === 'Dry Skin' || defender.ability === 'Solar Power') {
+            eot -= Math.floor(defender.maxHP / 8);
+            eotText.push(defender.ability + ' damage');
+        }
+    } else if (field.weather === 'Rain' || field.weather === "Heavy Rain") {
+        if (defender.ability === 'Dry Skin') {
+            eot += Math.floor(defender.maxHP / 8);
+            eotText.push('Dry Skin recovery');
+        } else if (defender.ability === 'Rain Dish') {
+            eot += Math.floor(defender.maxHP / 16);
+            eotText.push('Rain Dish recovery');
+        }
+    } else if (field.weather === 'Sand') {
+        if (['Rock', 'Ground', 'Steel'].indexOf(defender.type1) === -1 &&
+                ['Rock', 'Ground', 'Steel'].indexOf(defender.type2) === -1 &&
+                ['Magic Guard', 'Overcoat', 'Sand Force', 'Sand Rush', 'Sand Veil'].indexOf(defender.ability) === -1 &&
+                defender.item !== 'Safety Goggles') {
+            eot -= Math.floor(defender.maxHP / 16);
+            eotText.push('sandstorm damage');
+        }
+    } else if (field.weather === 'Hail') {
+        if (defender.ability === 'Ice Body') {
+            eot += Math.floor(defender.maxHP / 16);
+            eotText.push('Ice Body recovery');
+        } else if (defender.type1 !== 'Ice' && defender.type2 !== 'Ice' &&
+                ['Magic Guard', 'Overcoat', 'Snow Cloak'].indexOf(defender.ability) === -1 &&
+                defender.item !== 'Safety Goggles') {
+            eot -= Math.floor(defender.maxHP / 16);
+            eotText.push('hail damage');
+        }
     }
-    
-    if (defender.ability === "Thick Fat" && (move.type === "Fire" || move.type === "Ice")) {
-        at = Math.floor(at / 2);
-        description.defenderAbility = defender.ability;
-    } else if (isPhysical && defender.ability === "Marvel Scale" && defender.status !== "Healthy") {
-        df = Math.floor(df * 1.5);
-        description.defenderAbility = defender.ability;
+    if (defender.item === 'Leftovers') {
+        eot += Math.floor(defender.maxHP / 16);
+        eotText.push('Leftovers recovery');
+    } else if (defender.item === 'Black Sludge') {
+        if (defender.type1 === 'Poison' || defender.type2 === 'Poison') {
+            eot += Math.floor(defender.maxHP / 16);
+            eotText.push('Black Sludge recovery');
+        } else if (defender.ability !== 'Magic Guard' && defender.ability !== 'Klutz') {
+            eot -= Math.floor(defender.maxHP / 8);
+            eotText.push('Black Sludge damage');
+        }
     }
-    
-    if (isPhysical && (attacker.ability === "Hustle" || (attacker.ability === "Guts" && attacker.status !== "Healthy"))) {
-        at = Math.floor(at * 1.5);
-        description.attackerAbility = attacker.ability;
-    } else if (attacker.curHP <= attacker.maxHP / 3 &&
-            ((attacker.ability === "Overgrow" && move.type === "Grass") ||
-            (attacker.ability === "Blaze" && move.type === "Fire") ||
-            (attacker.ability === "Torrent" && move.type === "Water") ||
-            (attacker.ability === "Swarm" && move.type === "Bug"))) {
-        bp = Math.floor(bp * 1.5);
-        description.attackerAbility = attacker.ability;
+    if (field.terrain === "Grassy") {
+        if (field.isGravity || (defender.type1 !== "Flying" && defender.type2 !== "Flying" &&
+                defender.item !== "Air Balloon" && defender.ability !== "Levitate")) {
+            eot += Math.floor(defender.maxHP / 16);
+            eotText.push('Grassy Terrain recovery');
+        }
     }
-    
-    if (move.name === "Explosion" || move.name === "Self-Destruct") {
-        df = Math.floor(df / 2);
+    var toxicCounter = 0;
+    if (defender.status === 'Poisoned') {
+        if (defender.ability === 'Poison Heal') {
+            eot += Math.floor(defender.maxHP / 8);
+            eotText.push('Poison Heal');
+        } else if (defender.ability !== 'Magic Guard') {
+            eot -= Math.floor(defender.maxHP / 8);
+            eotText.push('poison damage');
+        }
+    } else if (defender.status === 'Badly Poisoned') {
+        if (defender.ability === 'Poison Heal') {
+            eot += Math.floor(defender.maxHP / 8);
+            eotText.push('Poison Heal');
+        } else if (defender.ability !== 'Magic Guard') {
+            eotText.push('toxic damage');
+            toxicCounter = defender.toxicCounter;
+        }
+    } else if (defender.status === 'Burned') {
+        if (defender.ability === 'Heatproof') {
+            eot -= Math.floor(defender.maxHP / 16);
+            eotText.push('reduced burn damage');
+        } else if (defender.ability !== 'Magic Guard') {
+            eot -= Math.floor(defender.maxHP / 8);
+            eotText.push('burn damage');
+        }
+    } else if (defender.status === 'Asleep' && isBadDreams && defender.ability !== 'Magic Guard') {
+        eot -= Math.floor(defender.maxHP / 8);
+        eotText.push('Bad Dreams');
     }
-    
-    var isCritical = move.isCrit && ["Battle Armor", "Shell Armor"].indexOf(defender.ability) === -1;
-    
-    var attackBoost = attacker.boosts[attackStat];
-    var defenseBoost = defender.boosts[defenseStat];
-    if (attackBoost > 0 || (!isCritical && attackBoost < 0)) {
-        at = getModifiedStat(at, attackBoost);
-        description.attackBoost = attackBoost;
+
+    // multi-hit moves have too many possibilities for brute-forcing to work, so reduce it to an approximate distribution
+    var qualifier = '';
+    if (hits > 1) {
+        qualifier = 'approx. ';
+        damage = squashMultihit(damage, hits);
     }
-    if (defenseBoost < 0 || (!isCritical && defenseBoost > 0)) {
-        df = getModifiedStat(df, defenseBoost);
-        description.defenseBoost = defenseBoost;
+
+    var c = getKOChance(damage, defender.maxHP - hazards, 0, 1, defender.maxHP, toxicCounter);
+    var afterText = hazardText.length > 0 ? ' after ' + serializeText(hazardText) : '';
+    if (c === 1) {
+        return 'guaranteed OHKO' + afterText;
+    } else if (c > 0) {
+        return qualifier + Math.round(c * 1000) / 10 + '% chance to OHKO' + afterText;
     }
-    
-    var baseDamage = Math.floor(Math.floor(Math.floor(2 * lv / 5 + 2) * at * bp / df) / 50);
-    
-    if (attacker.status === "Burned" && isPhysical && attacker.ability !== "Guts") {
-        baseDamage = Math.floor(baseDamage / 2);
-        description.isBurned = true;
-    }
-    
-    if (!isCritical) {
-        var screenMultiplier = field.format !== "Singles" ? (2/3) : (1/2);
-        if (isPhysical && field.isReflect) {
-            baseDamage = Math.floor(baseDamage * screenMultiplier); 
-            description.isReflect = true;
-        } else if (!isPhysical && field.isLightScreen) {
-            baseDamage = Math.floor(baseDamage * screenMultiplier); 
-            description.isLightScreen = true;
+
+    afterText = hazardText.length > 0 || eotText.length > 0 ? ' after ' + serializeText(hazardText.concat(eotText)) : '';
+    var i;
+    for (i = 2; i <= 4; i++) {
+        c = getKOChance(damage, defender.maxHP - hazards, eot, i, defender.maxHP, toxicCounter);
+        if (c === 1) {
+            return 'guaranteed ' + i + 'HKO' + afterText;
+        } else if (c > 0) {
+            return qualifier + Math.round(c * 1000) / 10 + '% chance to ' + i + 'HKO' + afterText;
         }
     }
 
-    if (field.format !== "Singles" && move.isSpread) {
-        // some sources say 3/4, some say 2/3, some say 1/2...using 3/4 for now since that's what DPP+ use
-        baseDamage = Math.floor(baseDamage * 3/4);
-    }
-    
-    if ((field.weather === "Sun" && move.type === "Fire") || (field.weather === "Rain" && move.type === "Water")) {
-        baseDamage = Math.floor(baseDamage * 1.5);
-        description.weather = field.weather;
-    } else if ((field.weather === "Sun" && move.type === "Water") || (field.weather === "Rain" && move.type === "Fire") ||
-            (move.name === "Solar Beam" && ["Rain", "Sand", "Hail"].indexOf(field.weather) !== -1)) {
-        baseDamage = Math.floor(baseDamage / 2);
-        description.weather = field.weather;
+    for (i = 5; i <= 9; i++) {
+        if (predictTotal(damage[0], eot, i, toxicCounter, defender.maxHP) >= defender.maxHP - hazards) {
+            return 'guaranteed ' + i + 'HKO' + afterText;
+        } else if (predictTotal(damage[damage.length-1], eot, i, toxicCounter, defender.maxHP) >= defender.maxHP - hazards) {
+            return 'possible ' + i + 'HKO' + afterText;
+        }
     }
 
-    if (attacker.ability === "Flash Fire (activated)" && move.type === "Fire") {
-        baseDamage = Math.floor(baseDamage * 1.5);
-        description.attackerAbility = "Flash Fire";
+    return 'possibly the worst move ever';
+}
+
+function getKOChance(damage, hp, eot, hits, maxHP, toxicCounter) {
+    var n = damage.length;
+    var minDamage = damage[0];
+    var maxDamage = damage[n-1];
+    var i;
+    if (hits === 1) {
+        if (maxDamage < hp) {
+            return 0;
+        }
+        for (i = 0; i < n; i++) {
+            if (damage[i] >= hp) {
+                return (n-i)/n;
+            }
+        }
     }
-    
-    baseDamage = Math.max(1, baseDamage) + 2;
-    
-    if (isCritical) {
-        baseDamage *= 2;
-        description.isCritical = true;
+    if (predictTotal(maxDamage, eot, hits, toxicCounter, maxHP) < hp) {
+        return 0;
+    } else if (predictTotal(minDamage, eot, hits, toxicCounter, maxHP) >= hp) {
+        return 1;
     }
-    
-    if (move.name === "Weather Ball" && field.weather !== "") {
-        baseDamage *= 2;
-        description.moveBP = move.bp * 2;
+    var toxicDamage = 0;
+    if (toxicCounter > 0) {
+        toxicDamage = Math.floor(toxicCounter * maxHP / 16);
+        toxicCounter++;
     }
-    
-    if (field.isHelpingHand) {
-        baseDamage = Math.floor(baseDamage * 1.5);
-        description.isHelpingHand = true;
+    var sum = 0;
+    for (i = 0; i < n; i++) {
+        var c = getKOChance(damage, hp - damage[i] + eot - toxicDamage, eot, hits - 1, maxHP, toxicCounter);
+        if (c === 1) {
+            sum += (n-i);
+            break;
+        } else {
+            sum += c;
+        }
     }
-    
-    if (move.type === attacker.type1 || move.type === attacker.type2) {
-        baseDamage = Math.floor(baseDamage * 1.5);
+    return sum/n;
+}
+
+function predictTotal(damage, eot, hits, toxicCounter, maxHP) {
+    var toxicDamage = 0;
+    if (toxicCounter > 0) {
+        for (var i = 0; i < hits-1; i++) {
+            toxicDamage += Math.floor((toxicCounter + i) * maxHP / 16);
+        }
     }
-    
-    baseDamage = Math.floor(baseDamage * typeEffectiveness);
-    
-    var damage = [];
-    for (var i = 85; i <= 100; i++) {
-        damage[i-85] = Math.max(1, Math.floor(baseDamage * i / 100));
+    var total = (damage * hits) - (eot * (hits - 1)) + toxicDamage;
+    return total;
+}
+
+function squashMultihit(d, hits) {
+    if (d.length === 1) {
+        return [d[0] * hits];
+    } else if (gen === 1) {
+        var r = [];
+        for (var i = 0; i < d.length; i++) {
+            r[i] = d[i] * hits;
+        }
+        return r;
+    } else if (d.length === 16) {
+        switch (hits) {
+            case 2:
+                return [
+                    2*d[0], d[2]+d[3], d[4]+d[4], d[4]+d[5],
+                    d[5]+d[6], d[6]+d[6], d[6]+d[7], d[7]+d[7],
+                    d[8]+d[8], d[8]+d[9], d[9]+d[9], d[9]+d[10],
+                    d[10]+d[11], d[11]+d[11], d[12]+d[13], 2*d[15]
+                ];
+            case 3:
+                return [
+                    3*d[0], d[3]+d[3]+d[4], d[4]+d[4]+d[5], d[5]+d[5]+d[6],
+                    d[5]+d[6]+d[6], d[6]+d[6]+d[7], d[6]+d[7]+d[7], d[7]+d[7]+d[8],
+                    d[7]+d[8]+d[8], d[8]+d[8]+d[9], d[8]+d[9]+d[9], d[9]+d[9]+d[10],
+                    d[9]+d[10]+d[10], d[10]+d[11]+d[11], d[11]+d[12]+d[12], 3*d[15]
+                ];
+            case 4:
+                return [
+                    4*d[0], 4*d[4], d[4]+d[5]+d[5]+d[5], d[5]+d[5]+d[6]+d[6],
+                    4*d[6], d[6]+d[6]+d[7]+d[7], 4*d[7], d[7]+d[7]+d[7]+d[8],
+                    d[7]+d[8]+d[8]+d[8], 4*d[8], d[8]+d[8]+d[9]+d[9], 4*d[9],
+                    d[9]+d[9]+d[10]+d[10], d[10]+d[10]+d[10]+d[11], 4*d[11], 4*d[15]
+                ];
+            case 5:
+                return [
+                    5*d[0], d[4]+d[4]+d[4]+d[5]+d[5], d[5]+d[5]+d[5]+d[5]+d[6], d[5]+d[6]+d[6]+d[6]+d[6],
+                    d[6]+d[6]+d[6]+d[6]+d[7], d[6]+d[6]+d[7]+d[7]+d[7], 5*d[7], d[7]+d[7]+d[7]+d[8]+d[8],
+                    d[7]+d[7]+d[8]+d[8]+d[8], 5*d[8], d[8]+d[8]+d[8]+d[9]+d[9], d[8]+d[9]+d[9]+d[9]+d[9],
+                    d[9]+d[9]+d[9]+d[9]+d[10], d[9]+d[10]+d[10]+d[10]+d[10], d[10]+d[10]+d[11]+d[11]+d[11], 5*d[15]
+                ];
+            default:
+                console.log("Unexpected # of hits: " + hits);
+                return d;
+        }
+    } else if (d.length === 39) {
+        switch (hits) {
+            case 2:
+                return [
+                    2*d[0], 2*d[7], 2*d[10], 2*d[12],
+                    2*d[14], d[15]+d[16], 2*d[17], d[18]+d[19],
+                    d[19]+d[20], 2*d[21], d[22]+d[23], 2*d[24],
+                    2*d[26], 2*d[28], 2*d[31], 2*d[38]
+                ];
+            case 3:
+                return [
+                    3*d[0], 3*d[9], 3*d[12], 3*d[13],
+                    3*d[15], 3*d[16], 3*d[17], 3*d[18],
+                    3*d[20], 3*d[21], 3*d[22], 3*d[23],
+                    3*d[25], 3*d[26], 3*d[29], 3*d[38]
+                ];
+            case 4:
+                return [
+                    4*d[0], 2*d[10]+2*d[11], 4*d[13], 4*d[14],
+                    2*d[15]+2*d[16], 2*d[16]+2*d[17], 2*d[17]+2*d[18], 2*d[18]+2*d[19],
+                    2*d[19]+2*d[20], 2*d[20]+2*d[21], 2*d[21]+2*d[22], 2*d[22]+2*d[23],
+                    4*d[24], 4*d[25], 2*d[27]+2*d[28], 4*d[38]
+                ];
+            case 5:
+                return [
+                    5*d[0], 5*d[11], 5*d[13], 5*d[15],
+                    5*d[16], 5*d[17], 5*d[18], 5*d[19],
+                    5*d[19], 5*d[20], 5*d[21], 5*d[22],
+                    5*d[23], 5*d[25], 5*d[27], 5*d[38]
+                ];
+            default:
+                console.log("Unexpected # of hits: " + hits);
+                return d;
+        }
+    } else {
+        console.log("Unexpected # of possible damage values: " + d.length);
+        return d;
     }
-    return {"damage":damage, "description":buildDescription(description)};
+}
+
+function serializeText(arr) {
+    if (arr.length === 0) {
+        return '';
+    } else if (arr.length === 1) {
+        return arr[0];
+    } else if (arr.length === 2) {
+        return arr[0] + " and " + arr[1];
+    } else {
+        var text = '';
+        for (var i = 0; i < arr.length-1; i++) {
+            text += arr[i] + ', ';
+        }
+        return text + 'and ' + arr[arr.length-1];
+    }
 }
 
 function placeBsBtn(){
