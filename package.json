@@ -1,0 +1,28 @@
+{
+  "name": "damage-calc-theme",
+  "version": "1.0.0",
+  "description": "Chris's UI rehaul for the Pokemon Showdown Calculator!\r =======================",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisisonline/DamageCalcTheme.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrisisonline/DamageCalcTheme/issues"
+  },
+  "homepage": "https://github.com/chrisisonline/DamageCalcTheme#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
+  "dependencies": {
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^5.0.0",
+    "gulp-minify": "0.0.14",
+    "gulp-sass": "^2.3.2"
+  }
+}

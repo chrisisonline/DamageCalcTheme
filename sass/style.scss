@@ -1,3 +1,5 @@
+@import 'bootstrap';
+@import 'select2/select2';
 @import 'header-nav';
 
 /* Mixins */
@@ -262,7 +264,7 @@ th, td {
     padding: 10px 0;
   }
   .vs-logo {
-    background: url('VS-Logo.png') no-repeat center;
+    background: url('/img/VS-Logo.png') no-repeat center;
     background-size: contain;
     width: 10%;
     min-height: 80px;
